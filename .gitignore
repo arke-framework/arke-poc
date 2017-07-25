@@ -1,0 +1,10 @@
+# CMake
+build
+bin
+
+# Eclipse
+.cproject
+.project
+.settings/
+
+
