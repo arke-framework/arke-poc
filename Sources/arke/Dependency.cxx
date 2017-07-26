@@ -9,7 +9,8 @@
 
 namespace arke {
 
-    Dependency::Dependency(const std::string & name, const std::string & organization) : name_(name), organization_(organization) {
+    Dependency::Dependency(const std::string & name, const std::string & organization) :
+            name_(name), organization_(organization) {
 
     }
 

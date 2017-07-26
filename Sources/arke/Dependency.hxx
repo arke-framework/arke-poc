@@ -36,6 +36,7 @@ namespace arke {
 
         public:
 
+            /// \brief Destructor
             virtual ~Dependency();
 
         public:

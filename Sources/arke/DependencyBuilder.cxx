@@ -12,12 +12,10 @@
 namespace arke {
 
     DependencyBuilder::DependencyBuilder() {
-        // TODO Auto-generated constructor stub
 
     }
 
     DependencyBuilder::~DependencyBuilder() {
-        // TODO Auto-generated destructor stub
     }
 
     DependencyBuilder& DependencyBuilder::name(const std::string& name) {

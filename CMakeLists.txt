@@ -1,6 +1,9 @@
 # Define minimum cmake version
 cmake_minimum_required(VERSION 3.8)
 
+# Enable test
+enable_testing()
+
 # Define C++ standard to use
 set(CMAKE_CXX_STANDARD 17)
 
@@ -18,6 +21,8 @@ add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
 add_library(
     arke
     Sources/arke/Dependency.cxx Sources/arke/Dependency.hxx
+    Sources/arke/DependencyDefinition.cxx Sources/arke/DependencyDefinition.hxx
+    Sources/arke/VersionMatcher.cxx Sources/arke/VersionMatcher.hxx
     Sources/arke/DependencyBuilder.cxx Sources/arke/DependencyBuilder.hxx
     Sources/arke/Package.cxx Sources/arke/Package.hxx
 )
@@ -33,6 +38,8 @@ add_executable(
 	Tests/main.cxx
 	Tests/arke/Dependency_test.cxx
 	Tests/arke/Package_test.cxx
+	Tests/arke/DependencyDefinition_test.cxx
+	Tests/arke/VersionMatcher_test.cxx
 )
 target_include_directories(
 	arke_test
@@ -45,3 +52,6 @@ target_link_libraries(
 	arke
 	${GCC_COVERAGE_LINK_FLAGS}
 )
+
+# Register test
+add_test(arke_test arke_test)
