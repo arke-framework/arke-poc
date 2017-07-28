@@ -38,7 +38,7 @@ namespace arke {
 
         std::vector<std::string> versions;
 
-        static std::set SEPARATORS = {'.', ',', '-', '_', '/', '\\'};
+        static std::set<char> SEPARATORS = {'.', ',', '-', '_', '/', '\\'};
 
         std::stringstream ss;
 

@@ -1,7 +1,17 @@
 
 #!/bin/bash
 
-export CXX=g++
+echo " -- Compiler familly ${CXX}"
+
+alias clangcov="llvm-cov gcov"
+    
+export COV_EXE=lcov
+if [ $CXX == "clang"++ ]; then
+    export COV_TOOL=ccov
+else 
+    export CXX=g++
+    export COV_TOOL=gcov
+fi
 
 # Projects
 SCRIPT_DIRECTORY=`dirname "$0"`
@@ -39,32 +49,32 @@ echo " - Build"
 # Build
 make
 
-echo " - Init lcov : lcov -f -c -i --directory ${BUILD_DIRECTORY} -o app_base.info"
+echo " - Init ${COV_EXE} : ${COV_EXE} --gcov-tool ${COV_TOOL} -f -c -i --directory ${BUILD_DIRECTORY} -o app_base.info"
 
 # Init test file
-lcov -f -c -i --directory ${BUILD_DIRECTORY} -o app_base.info
+${COV_EXE} --gcov-tool ${COV_TOOL} -f -c -i --directory ${BUILD_DIRECTORY} -o app_base.info
 
 echo " - Launch test : make test"
 
 # Launch test
 make test
 
-echo " - Collect lcov : lcov -f -c --directory ${BUILD_DIRECTORY} -o app_test.info"
+echo " - Collect ${COV_EXE} : ${COV_EXE} --gcov-tool ${COV_TOOL} -f -c --directory ${BUILD_DIRECTORY} -o app_test.info"
 
 # Collect coverage
-lcov -f -c --directory ${BUILD_DIRECTORY} -o app_test.info
+${COV_EXE} --gcov-tool ${COV_TOOL}  -f -c --directory ${BUILD_DIRECTORY} -o app_test.info
 
-echo " - Filter ${SOURCES_DIRECTORY} : lcov -e app_test.info "${SOURCES_DIRECTORY}/*" -o result.info"
+echo " - Filter ${SOURCES_DIRECTORY} : ${COV_EXE} --gcov-tool ${COV_TOOL} -e app_test.info "${SOURCES_DIRECTORY}/*" -o result.info"
 
-echo " - Combine lcov : lcov -a app_base.info -a app_test.info -o app_total.info"
+echo " - Combine ${COV_EXE} : ${COV_EXE} -a app_base.info -a app_test.info -o app_total.info"
 
 # Combine coverage
-lcov -a app_base.info -a app_test.info -o app_total.info
+${COV_EXE} --gcov-tool ${COV_TOOL} --gcov-tool ${COV_TOOL} -a app_base.info -a app_test.info -o app_total.info
 
 echo " - Filter ${SOURCES_DIRECTORY}"
 
 # Filter results
-lcov -e app_total.info "${SOURCES_DIRECTORY}/*" -o result.info
+${COV_EXE} --gcov-tool ${COV_TOOL} -e app_total.info "${SOURCES_DIRECTORY}/*" -o result.info
 
 echo " - Generate report "`pwd`"/out : genhtml result.info --output-directory out"
 

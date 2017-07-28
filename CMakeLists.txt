@@ -10,11 +10,19 @@ set(CMAKE_CXX_STANDARD 17)
 # Project name
 project("arke")
 
-# Add coverage
-SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
-SET(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
+message("-- Compiler familly ${CMAKE_CXX_COMPILER_ID}")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	# Add coverage
+	SET(COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage -stdlib=libc++")
+	SET(COVERAGE_LINK_FLAGS    "--coverage  -stdlib=libc++ -lc++abi")
+else()	
+	# Add coverage
+	SET(COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
+	SET(COVERAGE_LINK_FLAGS    "-lgcov")
+endif()
 
-add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+# Add coverage
+add_definitions(${COVERAGE_COMPILE_FLAGS})
 
 
 # Add executable
@@ -28,7 +36,7 @@ add_library(
 )
 target_link_libraries(
 	arke
-	${GCC_COVERAGE_LINK_FLAGS}
+#	${COVERAGE_LINK_FLAGS}
 )
 
 
@@ -50,7 +58,7 @@ target_include_directories(
 target_link_libraries(
 	arke_test
 	arke
-	${GCC_COVERAGE_LINK_FLAGS}
+	${COVERAGE_LINK_FLAGS}
 )
 
 # Register test
