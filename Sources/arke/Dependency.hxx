@@ -43,6 +43,12 @@ namespace arke {
 
             /// \return Dependency ID that is composed of organization / dependency name
             const std::string id() const;
+
+            /// \return Package name
+            const std::string & name() const;
+
+            /// \return Package organization
+            const std::string & organization() const;
     };
 
 } /* namespace arke */

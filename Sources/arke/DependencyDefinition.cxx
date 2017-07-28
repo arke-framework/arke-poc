@@ -9,13 +9,23 @@
 
 namespace arke {
 
+    // Constructor
     DependencyDefinition::DependencyDefinition(const std::string & id, const std::string & version) :id_(id), version_(version) {
-        // TODO Auto-generated constructor stub
 
     }
 
+    // Destructor
     DependencyDefinition::~DependencyDefinition() {
-        // TODO Auto-generated destructor stub
+    }
+
+    // Dependency id
+    const std::string DependencyDefinition::id() const {
+        return id_;
+    }
+
+    // Version matcher
+    const std::string DependencyDefinition::version() const {
+        return version_;
     }
 
 } /* namespace arke */

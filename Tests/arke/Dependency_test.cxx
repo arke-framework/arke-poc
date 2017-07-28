@@ -13,9 +13,21 @@ namespace arke {
 
     TEST_CASE( "Simple test dependency", "[dependency]" ) {
 
-        DependencyPtr dependency = DependencyBuilder { }.name("package1").organizationName("org").build();
+        DependencyBuilder & dependencyBuilder = * new DependencyBuilder { };
+        REQUIRE_THROWS(dependencyBuilder.build());
+
+        dependencyBuilder.name("package1");
+        REQUIRE_THROWS(dependencyBuilder.build());
+
+        dependencyBuilder.organizationName("org");
+
+        DependencyPtr dependency = dependencyBuilder.build();
 
         REQUIRE(dependency->id() == "org/package1");
+        REQUIRE(dependency->organization() == "org");
+        REQUIRE(dependency->name() == "package1");
+
+        delete & dependencyBuilder;
     }
 
 } /* namespace arke */

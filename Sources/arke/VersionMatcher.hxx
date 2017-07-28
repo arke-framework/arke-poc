@@ -57,13 +57,15 @@ namespace arke {
         public:
 
             /// \brief Destructor
-            virtual ~VersionMatcher() {}
+            virtual ~VersionMatcher();
 
             /// \brief Match version
             /// \param version Version to test
             /// \return True if version match
             virtual bool match(const std::string & version) const = 0;
 
+            /// \return Type of matcher
+            virtual MatcherType type() const = 0;
     };
 
     /// \brief Version equals
@@ -84,6 +86,9 @@ namespace arke {
             /// \param version Version to test
             /// \return True if version match
             virtual bool match(const std::string & version) const override;
+
+            /// \return Type of matcher
+            virtual MatcherType type() const override;
     };
 
     /// \brief Version higher or equals than version
@@ -104,6 +109,9 @@ namespace arke {
             /// \param version Version to test
             /// \return True if version match
             virtual bool match(const std::string & version) const override;
+
+            /// \return Type of matcher
+            virtual MatcherType type() const override;
     };
 
     /// \brief Version match pattern using separator
@@ -125,6 +133,8 @@ namespace arke {
             /// \return True if version match
             virtual bool match(const std::string & version) const override;
 
+            /// \return Type of matcher
+            virtual MatcherType type() const override;
     };
 
 } /* namespace arke */

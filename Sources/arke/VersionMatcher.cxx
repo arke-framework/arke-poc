@@ -28,6 +28,12 @@
 
 namespace arke {
 
+    // Destructor
+    VersionMatcher::~VersionMatcher() {
+
+    }
+
+    // Decode a version to a list of elements
     std::vector<std::string> VersionMatcher::decode(const std::string & version) {
 
         std::vector<std::string> versions;
@@ -66,6 +72,11 @@ namespace arke {
     // Match version
     bool VersionEquals::match(const std::string & version) const {
         return version_ == version;
+    }
+
+    // Type of matcher
+    MatcherType VersionEquals::type() const  {
+        return MatcherType::EQUALS;
     }
 
     // Constructor with separator
@@ -112,6 +123,10 @@ namespace arke {
         return reference_versions == versions_.end();
     }
 
+    // Type of matcher
+    MatcherType VersionHigher::type() const  {
+        return MatcherType::HIGHER;
+    }
 
     // Constructor with separator
     VersionPattern::VersionPattern(const std::string & version) : versions_(VersionHigher::decode(version)) {
@@ -159,6 +174,11 @@ namespace arke {
         }
 
         return reference_versions == versions_.end();
+    }
+
+    // Type of matcher
+    MatcherType VersionPattern::type() const  {
+        return MatcherType::PATTERN;
     }
 
 } /* namespace arke */

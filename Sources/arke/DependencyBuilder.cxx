@@ -33,7 +33,7 @@ namespace arke {
         if (name_.empty()) {
             throw new std::invalid_argument{"Unable to create dependency without name"};
         }
-        if (name_.empty()) {
+        if (organizationName_.empty()) {
             throw new std::invalid_argument{"Unable to create dependency without organization name"};
         }
         return DependencyPtr{new Dependency{name_, organizationName_}};

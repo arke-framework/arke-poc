@@ -6,12 +6,17 @@
  */
 
 #include "../catch/catch.hpp"
-#include "arke/Dependency.hxx"
+#include "arke/Package.hxx"
 
 namespace arke {
 
     TEST_CASE( "Simple test package", "[package]" ) {
-        REQUIRE(true);
+
+        Package & package = * new Package{};
+
+        REQUIRE(&package);
+
+        delete &package;
     }
 
 } /* namespace arke */

@@ -24,7 +24,7 @@ namespace arke {
             /// \brief Dependency id
             std::string id_;
 
-            /// \brief version matcher
+            /// \brief Version matcher
             std::string version_;
 
         public:
@@ -34,8 +34,14 @@ namespace arke {
             /// \param version Version matcher
             DependencyDefinition(const std::string & id, const std::string & version);
 
-            /// \breif Destructor
+            /// \brief Destructor
             virtual ~DependencyDefinition();
+
+            /// \return Dependency id
+            const std::string id() const;
+
+            /// \return Version matcher
+            const std::string version() const;
     };
 
 } /* namespace arke */

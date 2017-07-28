@@ -22,4 +22,14 @@ namespace arke {
         return (organization_ + '/' + name_);
     }
 
+    // Package name
+    const std::string & Dependency::name() const {
+        return name_;
+    }
+
+    // Package organization
+    const std::string & Dependency::organization() const {
+        return organization_;
+    }
+
 } /* namespace arke */
