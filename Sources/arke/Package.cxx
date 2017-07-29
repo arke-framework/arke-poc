@@ -9,13 +9,14 @@
 
 namespace arke {
 
-Package::Package() {
-	// TODO Auto-generated constructor stub
+    // Constructor
+    Package::Package() {
 
-}
+    }
 
-Package::~Package() {
-	// TODO Auto-generated destructor stub
-}
+    // Destructor
+    Package::~Package() {
+
+    }
 
 } /* namespace arke */
