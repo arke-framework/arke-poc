@@ -12,7 +12,7 @@ namespace arke {
 
     TEST_CASE( "Simple test package", "[package]" ) {
 
-        Package & package = * new Package{};
+        Package & package = *new Package { };
 
         REQUIRE(&package);
 

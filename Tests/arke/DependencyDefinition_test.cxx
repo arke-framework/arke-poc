@@ -12,14 +12,12 @@ namespace arke {
 
     TEST_CASE( "Simple test dependency definition", "[dependency-definition]" ) {
 
-        DependencyDefinition & dependencyDefinition = * new DependencyDefinition{
-            "org/dependency", "1.2.3"
-        };
+        DependencyDefinition & dependencyDefinition = *new DependencyDefinition { "org/dependency", "1.2.3" };
 
         REQUIRE("org/dependency" == dependencyDefinition.id());
         REQUIRE("1.2.3" == dependencyDefinition.version());
 
-        delete & dependencyDefinition;
+        delete &dependencyDefinition;
     }
 
 } /* namespace arke */

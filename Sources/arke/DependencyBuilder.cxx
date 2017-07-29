@@ -31,12 +31,12 @@ namespace arke {
     // Build dependency
     DependencyPtr DependencyBuilder::build() {
         if (name_.empty()) {
-            throw new std::invalid_argument{"Unable to create dependency without name"};
+            throw new std::invalid_argument { "Unable to create dependency without name" };
         }
         if (organizationName_.empty()) {
-            throw new std::invalid_argument{"Unable to create dependency without organization name"};
+            throw new std::invalid_argument { "Unable to create dependency without organization name" };
         }
-        return DependencyPtr{new Dependency{name_, organizationName_}};
+        return DependencyPtr { new Dependency { name_, organizationName_ } };
     }
 
 } /* namespace arke */

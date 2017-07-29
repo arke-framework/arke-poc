@@ -10,7 +10,8 @@
 namespace arke {
 
     // Constructor
-    DependencyDefinition::DependencyDefinition(const std::string & id, const std::string & version) :id_(id), version_(version) {
+    DependencyDefinition::DependencyDefinition(const std::string & id, const std::string & version) :
+            id_(id), version_(version) {
 
     }
 

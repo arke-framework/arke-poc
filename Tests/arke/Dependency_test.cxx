@@ -13,7 +13,7 @@ namespace arke {
 
     TEST_CASE( "Simple test dependency", "[dependency]" ) {
 
-        DependencyBuilder & dependencyBuilder = * new DependencyBuilder { };
+        DependencyBuilder & dependencyBuilder = *new DependencyBuilder { };
         REQUIRE_THROWS(dependencyBuilder.build());
 
         dependencyBuilder.name("package1");
@@ -27,7 +27,7 @@ namespace arke {
         REQUIRE(dependency->organization() == "org");
         REQUIRE(dependency->name() == "package1");
 
-        delete & dependencyBuilder;
+        delete &dependencyBuilder;
     }
 
 } /* namespace arke */

@@ -33,9 +33,10 @@ namespace arke {
     using VersionMatcherPtr = std::shared_ptr<VersionMatcher>;
 
     /// \brief Define matcher type
-    enum class MatcherType : int {
+    enum class MatcherType
+        : int {
 
-        /// Version equals
+            /// Version equals
         EQUALS,
 
         /// Version higher (or equals) than
@@ -70,7 +71,7 @@ namespace arke {
     };
 
     /// \brief Version equals
-    class VersionEquals : public VersionMatcher {
+    class VersionEquals: public VersionMatcher {
 
         private:
 
@@ -93,7 +94,7 @@ namespace arke {
     };
 
     /// \brief Version higher or equals than version
-    class VersionHigher : public VersionMatcher {
+    class VersionHigher: public VersionMatcher {
 
         private:
 
@@ -116,7 +117,7 @@ namespace arke {
     };
 
     /// \brief Version match pattern using separator
-    class VersionPattern : public VersionMatcher {
+    class VersionPattern: public VersionMatcher {
 
         private:
 

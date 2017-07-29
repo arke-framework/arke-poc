@@ -38,7 +38,7 @@ namespace arke {
 
         std::vector<std::string> versions;
 
-        static std::set<char> SEPARATORS = {'.', ',', '-', '_', '/', '\\'};
+        static std::set<char> SEPARATORS = { '.', ',', '-', '_', '/', '\\' };
 
         std::stringstream ss;
 
@@ -53,7 +53,7 @@ namespace arke {
                 versions.push_back(ss.str());
 
                 // Reset stream
-                ss = std::stringstream{};
+                ss = std::stringstream { };
             }
         }
 
@@ -65,7 +65,8 @@ namespace arke {
         return versions;
     }
 
-    VersionEquals::VersionEquals(const std::string & version) : version_(version) {
+    VersionEquals::VersionEquals(const std::string & version) :
+            version_(version) {
 
     }
 
@@ -75,12 +76,13 @@ namespace arke {
     }
 
     // Type of matcher
-    MatcherType VersionEquals::type() const  {
+    MatcherType VersionEquals::type() const {
         return MatcherType::EQUALS;
     }
 
     // Constructor with separator
-    VersionHigher::VersionHigher(const std::string & version) : versions_(VersionHigher::decode(version)) {
+    VersionHigher::VersionHigher(const std::string & version) :
+            versions_(VersionHigher::decode(version)) {
 
     }
 
@@ -100,19 +102,19 @@ namespace arke {
             try {
                 // Get int
                 int reference = stoi(*reference_versions);
-                int current =  stoi(*current_versions);
+                int current = stoi(*current_versions);
 
                 if (reference < current) {
                     return true;
                 } else if (reference > current) {
                     return false;
                 }
-            } catch(...) {
+            } catch (...) {
                 if (*reference_versions < *current_versions) {
-                   return true;
-               } else if (*reference_versions > *current_versions) {
-                   return false;
-               }
+                    return true;
+                } else if (*reference_versions > *current_versions) {
+                    return false;
+                }
             }
 
             // Next
@@ -124,12 +126,13 @@ namespace arke {
     }
 
     // Type of matcher
-    MatcherType VersionHigher::type() const  {
+    MatcherType VersionHigher::type() const {
         return MatcherType::HIGHER;
     }
 
     // Constructor with separator
-    VersionPattern::VersionPattern(const std::string & version) : versions_(VersionHigher::decode(version)) {
+    VersionPattern::VersionPattern(const std::string & version) :
+            versions_(VersionHigher::decode(version)) {
 
     }
 
@@ -152,19 +155,19 @@ namespace arke {
                 try {
                     // Get int
                     int reference = stoi(*reference_versions);
-                    int current =  stoi(*current_versions);
+                    int current = stoi(*current_versions);
 
                     if (reference < current) {
                         return true;
                     } else if (reference > current) {
                         return false;
                     }
-                } catch(...) {
+                } catch (...) {
                     if (*reference_versions < *current_versions) {
-                       return true;
-                   } else if (*reference_versions > *current_versions) {
-                       return false;
-                   }
+                        return true;
+                    } else if (*reference_versions > *current_versions) {
+                        return false;
+                    }
                 }
             }
 
@@ -177,7 +180,7 @@ namespace arke {
     }
 
     // Type of matcher
-    MatcherType VersionPattern::type() const  {
+    MatcherType VersionPattern::type() const {
         return MatcherType::PATTERN;
     }
 
