@@ -34,6 +34,8 @@ wget http://releases.llvm.org/4.0.1/clang+llvm-4.0.1-x86_64-linux-gnu-debian8.ta
 tar xvfJ dl-clang.tar.xz
 mv clang* clang
 echo " - Clang path : " `pwd`/clang
+export CC=/tools/bin/clang
+export CXX=/tools/bin/clang++
 
 # Build botan
 wget https://botan.randombit.net/releases/Botan-2.1.0.tgz
@@ -49,6 +51,8 @@ cd ..
 /tools/cmake/bin/cmake
 /tools/clang/bin/clang
 /tools/clang/bin/clang++
+
+echo "#####################################################################################"
 
 # Go directory
 cd ${DIRECTORY}
