@@ -10,7 +10,7 @@
 namespace arke {
 
     // Constructor
-    Package::Package() {
+    Package::Package(std::shared_ptr<Dependency> dependency) : dependency_(dependency) {
 
     }
 

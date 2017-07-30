@@ -6,13 +6,15 @@
  */
 
 #include "../catch/catch.hpp"
+#include "arke/Dependency.hxx"
+#include "arke/DependencyBuilder.hxx"
 #include "arke/Package.hxx"
 
 namespace arke {
 
     TEST_CASE( "Simple test package", "[package]" ) {
 
-        Package & package = *new Package { };
+        Package & package = *new Package { DependencyBuilder { }.organizationName("org").name("package").build() };
 
         REQUIRE(&package);
 
