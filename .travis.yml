@@ -9,17 +9,19 @@ addons:
   apt:
     sources:
       - boost-latest
+      - sourceline: 'ppa:ubuntu-toolchain-r/test'
     packages:
       - build-essential 
-      - libboost-all-dev 
+      - libboost-all-dev
+      - gcc-7
 script: 
 - travis/buildenv.sh
 - mkdir build
 - cd build
-- export CC=/home/travis/build/arke-framework/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang
-- export CXX=/home/travis/build/arke-framework/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang++
-- export LD_LIBRARY_PATH="/home/travis/build/arke-framework/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/lib;${LD_LIBRARY_PATH}"
-- /home/travis/build/arke-framework/cmake/bin/cmake ..
+- export CC=/tools/clang/bin/clang
+- export CXX=/tools/clang/bin/clang++
+- export LD_LIBRARY_PATH="/tools/clang/lib;${LD_LIBRARY_PATH}"
+- /tools/cmake/bin/cmake ..
 - make
 - make test
 

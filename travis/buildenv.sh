@@ -1,20 +1,21 @@
 #!/bin/bash
 
-# Set directory
+# Set current directory
 DIRECTORY=`pwd`
-      
-echo " - Current path : " `pwd`
 
-# Go parent
-cd ..
+# Create tools
+sudo mkdir -p /tools
+sudo chown $USER /tools
+
+# Go to tools
+cd /tools
 
 # Set cmake
 wget https://cmake.org/files/v3.9/cmake-3.9.0-Linux-x86_64.tar.gz -O  dl-cmake.tar.gz
 tar xzf dl-cmake.tar.gz
 mv cmake-* cmake
-export PATH="${DIRECTORY}/../cmake/bin:$PATH"
-         
-echo " - CMake path : " `pwd`/cmake
+export PATH="/tools/cmake/bin:$PATH"
+echo " - CMake : " `pwd`
 
 # Install rapidjson
 wget https://github.com/miloyip/rapidjson/archive/v1.1.0.tar.gz -O dl-rapidjson.tar.gz
@@ -44,7 +45,10 @@ sudo make install
 echo " - Botan path : " `pwd`
 cd ..
 
+# Test clang
+/tools/cmake/bin/cmake
+/tools/clang/bin/clang
+/tools/clang/bin/clang++
+
 # Go directory
 cd ${DIRECTORY}
-      
-echo " - Current path : " `pwd`
