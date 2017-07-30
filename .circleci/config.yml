@@ -2,7 +2,16 @@ version: 2
 jobs:
    build:
      docker:
-       - image: debian:stable
+       - image: arke/cirlce-ci-gcc:latest
      steps:
        - checkout
-       - run: echo "hello world"
+       - run: |
+           apt-get install -y libboost-all-dev g++-7
+           git clone https://github.com/arke-framework/arke-poc.git
+           cd arke-poc
+           mkdir build
+           export CC=gcc-7
+           export CXX=g++-7
+           cmake ..
+           make
+           make test
