@@ -19,7 +19,7 @@ script:
 - export CC=../clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang
 - export CXX=../clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang++
 - export LD_LIBRARY_PATH="../clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-14.04/lib;${LD_LIBRARY_PATH}"
-- cmake ..
+- /home/travis/build/arke-framework/cmake ..
 - make
 - make test
 
