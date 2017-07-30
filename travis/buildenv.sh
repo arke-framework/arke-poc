@@ -28,15 +28,6 @@ sudo make install
 echo " - RapidJson path : " `pwd`
 cd ..
 
-
-# Set clang
-wget http://releases.llvm.org/4.0.1/clang+llvm-4.0.1-x86_64-linux-gnu-debian8.tar.xz -O dl-clang.tar.xz
-tar xvfJ dl-clang.tar.xz
-mv clang* clang
-echo " - Clang path : " `pwd`/clang
-export CC=/tools/bin/clang
-export CXX=/tools/bin/clang++
-
 # Build botan
 wget https://botan.randombit.net/releases/Botan-2.1.0.tgz
 tar xzf Botan-2.1.0.tgz
@@ -47,12 +38,11 @@ sudo make install
 echo " - Botan path : " `pwd`
 cd ..
 
-# Test clang
-/tools/cmake/bin/cmake
-/tools/clang/bin/clang
-/tools/clang/bin/clang++
-
-echo "#####################################################################################"
+# Clang
+# Set clang
+wget http://releases.llvm.org/4.0.1/clang+llvm-4.0.1-x86_64-linux-gnu-debian8.tar.xz -O dl-clang.tar.xz
+tar xvfJ dl-clang.tar.xz
+mv clang* clang
 
 # Go directory
 cd ${DIRECTORY}
