@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/arke-framework/arke-poc.svg?branch=master)](https://travis-ci.org/arke-framework/arke-poc)
+[![CircleCI](https://circleci.com/gh/arke-framework/arke-poc.svg?style=svg)](https://circleci.com/gh/arke-framework/arke-poc)
 
 # ARKE Project
 
