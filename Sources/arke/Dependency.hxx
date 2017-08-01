@@ -32,7 +32,9 @@ namespace arke {
             /// \brief Constructor with all parameters
             /// \param name Dependency name
             /// \param organization Organization name
-            Dependency(const std::string & name, const std::string & organization);
+            explicit Dependency(
+                    const std::string & name,
+                    const std::string & organization);
 
         public:
 
