@@ -5,13 +5,22 @@ jobs:
        - image: arke/cirlce-ci-gcc:latest
      steps:
        - checkout
-       - run: |
-           apt-get install -y libboost-all-dev g++-7
-           git clone https://github.com/arke-framework/arke-poc.git
-           cd arke-poc
-           mkdir build
-           export CC=gcc-7
-           export CXX=g++-7
-           cmake ..
-           make
-           make test
+       - run:
+           name: Clone
+           command: |
+               git clone https://github.com/arke-framework/arke-poc.git
+
+       - run:
+           name: Build
+           command: |
+               cd arke-poc
+               mkdir build
+               export CC=gcc-7
+               export CXX=g++-7
+               cmake ..
+               make  
+
+       - run:
+           name: Test
+           command: cd arke-poc && make test
+           when: on_success
