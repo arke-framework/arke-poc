@@ -1,0 +1,26 @@
+version: 2
+jobs:
+   build:
+     docker:
+       - image: arke/cirlce-ci-gcc:latest
+     steps:
+       - checkout
+       - run:
+           name: Clone
+           command: |
+               git clone https://github.com/arke-framework/arke-poc.git
+
+       - run:
+           name: Build
+           command: |
+               cd arke-poc
+               mkdir build
+               export CC=gcc-7
+               export CXX=g++-7
+               cmake ..
+               make  
+
+       - run:
+           name: Test
+           command: cd arke-poc && make test
+           when: on_success

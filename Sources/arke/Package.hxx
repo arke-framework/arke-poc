@@ -10,6 +10,8 @@
 
 #include <memory>
 
+#include "Dependency.hxx"
+
 namespace arke {
 
     class Package;
@@ -20,10 +22,14 @@ namespace arke {
 
         private:
 
+            /// \brief Dependency
+            std::shared_ptr<Dependency> dependency_;
+
         public:
 
             /// \brief Constructor
-            Package();
+            /// \param dependency Dependency
+            Package(std::shared_ptr<Dependency> dependency);
 
             /// \brief Destructor
             virtual ~Package();
