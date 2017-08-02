@@ -6,15 +6,10 @@ jobs:
      steps:
        - checkout
        - run:
-           name: Clone
-           command: |
-               git clone https://github.com/arke-framework/arke-poc.git
-
-       - run:
            name: Build
            command: |
-               cd arke-poc
                mkdir build
+               cd build
                export CC=gcc-7
                export CXX=g++-7
                cmake ..
@@ -22,5 +17,10 @@ jobs:
 
        - run:
            name: Test
-           command: cd arke-poc && make test
+           command: mkdir ~/junit/ && cd build && ./arke_test -s -r junit > ~/junit/result.xml
            when: on_success
+
+       - store_test_results:
+          path: ~/junit
+       - store_artifacts:
+          path: ~/junit
