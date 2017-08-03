@@ -21,6 +21,9 @@
 
 #include "FilesGroup.hxx"
 
+#include <exception>
+#include <boost/filesystem.hpp>
+
 namespace arke {
 
     // Constructor
@@ -40,6 +43,24 @@ namespace arke {
     // All files in group
     const std::set<HashFilePtr> & FilesGroup::files() const {
         return files_;
+    }
+
+    // Create Files group from directory
+    FilesGroupPtr FilesGroup::from(const std::string & name, const filesystem::path & path) {
+
+        // Test directory
+        if (!filesystem::exists(path) || !filesystem::is_directory(path)) {
+            throw std::runtime_error{"Path is not a directory"};
+        }
+
+        std::set<HashFilePtr> hashFiles{};
+
+        // Read all files
+        for(auto& p: filesystem::directory_iterator(path)) {
+            hashFiles.insert(HashFile::from(p));
+        }
+
+        return std::make_shared<FilesGroup>(name, hashFiles);
     }
 
 } /* namespace arke */

@@ -58,6 +58,13 @@ namespace arke {
 
             /// \return All files in group
             const std::set<HashFilePtr> & files() const;
+
+        public:
+
+            /// \brief Create Files group from directory
+            /// \param name Group name
+            /// \param path Path directory
+            static FilesGroupPtr from(const std::string & name, const filesystem::path & path);
     };
 
 } /* namespace arke */
