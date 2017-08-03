@@ -23,8 +23,10 @@
 #define SOURCES_ARKE_PACKAGE_HXX_
 
 #include <memory>
+#include <set>
 
 #include "Dependency.hxx"
+#include "FilesGroup.hxx"
 
 namespace arke {
 
@@ -39,14 +41,26 @@ namespace arke {
             /// \brief Dependency
             std::shared_ptr<Dependency> dependency_;
 
+            /// \brief Files groups
+            std::set<FilesGroupPtr> fileGroups_;
+
         public:
 
             /// \brief Constructor
             /// \param dependency Dependency
-            Package(std::shared_ptr<Dependency> dependency);
+            /// \param groups Set of files groups
+            Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups_ = {});
 
             /// \brief Destructor
             virtual ~Package();
+
+        public:
+
+            /// \return Dependency
+            std::shared_ptr<Dependency> dependency() const;
+
+            /// \return Files groups
+            std::set<FilesGroupPtr> fileGroups() const;
     };
 
 } /* namespace arke */

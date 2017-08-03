@@ -22,6 +22,7 @@
 #include <arke/FilesGroup.hxx>
 #include "../catch/catch.hpp"
 #include <fstream>
+#include <map>
 
 namespace arke {
 
@@ -53,23 +54,38 @@ namespace arke {
         REQUIRE("lib" == filesGroup->name());
         REQUIRE(3 == filesGroup->files().size());
 
+        std::map<std::string, HashFilePtr> hashFiles{
+            {hashFile1->path().string(), hashFile1},
+            {hashFile2->path().string(), hashFile2},
+            {hashFile3->path().string(), hashFile3}
+        };
+
         auto it = filesGroup->files().begin();
-        REQUIRE(hashFile1->hash() == (*it)->hash());
-        REQUIRE(file1 == (*it)->path());
+
+        auto filePtr1 = hashFiles.at((*it)->path().string());
+        REQUIRE(filePtr1->hash() == (*it)->hash());
+        REQUIRE(filePtr1->path() == (*it)->path());
+        hashFiles.erase(filePtr1->path().string());
 
         ++it;
-        REQUIRE(hashFile2->hash() == (*it)->hash());
-        REQUIRE(file2 == (*it)->path());
+        auto filePtr2 = hashFiles.at((*it)->path().string());
+        REQUIRE(filePtr2->hash() == (*it)->hash());
+        REQUIRE(filePtr2->path() == (*it)->path());
+        hashFiles.erase(filePtr2->path().string());
 
         ++it;
-        REQUIRE(hashFile3->hash() == (*it)->hash());
-        REQUIRE(file3 == (*it)->path());
+        auto filePtr3 = hashFiles.at((*it)->path().string());
+        REQUIRE(filePtr3->hash() == (*it)->hash());
+        REQUIRE(filePtr3->path() == (*it)->path());
+        hashFiles.erase(filePtr3->path().string());
+
+        REQUIRE(hashFiles.empty());
 
         auto filesGroup1 = FilesGroup::from("lib", directory);
         REQUIRE(3 == filesGroup1->files().size());
 
         delete filesGroup;
 
-        REQUIRE_THROWS(FilesGroup::from("lib", "plop"));
+        REQUIRE_THROWS(FilesGroup::from("lib", "invalid"));
     }
 } /* namespace arke */

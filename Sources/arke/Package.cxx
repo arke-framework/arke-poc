@@ -24,13 +24,23 @@
 namespace arke {
 
     // Constructor
-    Package::Package(std::shared_ptr<Dependency> dependency) : dependency_(dependency) {
+    Package::Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups) : dependency_(dependency), fileGroups_(fileGroups) {
 
     }
 
     // Destructor
     Package::~Package() {
 
+    }
+
+    // Dependency
+    std::shared_ptr<Dependency> Package::dependency() const {
+        return dependency_;
+    }
+
+    // Files groups
+    std::set<FilesGroupPtr> Package::fileGroups() const {
+        return fileGroups_;
     }
 
 } /* namespace arke */

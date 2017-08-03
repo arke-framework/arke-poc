@@ -32,6 +32,32 @@ namespace arke {
 
         REQUIRE(&package);
 
+        REQUIRE("org" == package.dependency()->organization());
+        REQUIRE("package" == package.dependency()->name());
+        REQUIRE("org/package" == package.dependency()->id());
+
+        REQUIRE(0 == package.fileGroups().size());
+
+        delete &package;
+    }
+
+    TEST_CASE( "Package with files", "[package]" ) {
+
+        Package & package = *new Package {
+            DependencyBuilder { }.organizationName("org").name("package").build(),
+            std::set<FilesGroupPtr>{
+
+            }
+        };
+
+        REQUIRE(&package);
+
+        REQUIRE("org" == package.dependency()->organization());
+        REQUIRE("package" == package.dependency()->name());
+        REQUIRE("org/package" == package.dependency()->id());
+
+        REQUIRE(0 == package.fileGroups().size());
+
         delete &package;
     }
 
