@@ -24,10 +24,10 @@
 
 #include <memory>
 #include <boost/filesystem.hpp>
-using namespace boost;
-using namespace filesystem;
 
 namespace arke {
+
+    namespace filesystem = boost::filesystem;
 
     class SHAGenerator;
     using SHAGeneratorPtr = std::shared_ptr<SHAGenerator>;
@@ -69,7 +69,7 @@ namespace arke {
 
             /// \brief Generate SHA of file
             /// \return String containing SHA
-            std::string hashFile(const path & path) const;
+            std::string hashFile(const filesystem::path & path) const;
 
             /// \brief Generate SHA of string
             /// \param str String to hash

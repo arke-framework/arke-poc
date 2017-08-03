@@ -25,7 +25,7 @@
 namespace arke {
 
     // Constructor
-    HashFile::HashFile(const std::string & hash, const boost::filesystem::path & path) : hash_(hash), path_(path) {
+    HashFile::HashFile(const std::string & hash, const filesystem::path & path) : hash_(hash), path_(path) {
     }
 
     // Destructor
@@ -38,12 +38,12 @@ namespace arke {
     }
 
     // Path
-    const boost::filesystem::path HashFile::path() const {
+    const filesystem::path HashFile::path() const {
         return path_;
     }
 
     // Create hash file from path
-    std::shared_ptr<HashFile> HashFile::from(const boost::filesystem::path & path) {
+    std::shared_ptr<HashFile> HashFile::from(const filesystem::path & path) {
         return std::shared_ptr<HashFile> { new HashFile { SHAGenerator { HashFunction::SHA256 }.hashFile(path), path } };
     }
 

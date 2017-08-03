@@ -28,6 +28,8 @@
 
 namespace arke {
 
+    namespace filesystem = boost::filesystem;
+
     class HashFile;
     using HashFilePtr = std::shared_ptr<HashFile>;
 
@@ -40,13 +42,13 @@ namespace arke {
             std::string hash_;
 
             /// \brief Path
-            boost::filesystem::path path_;
+            filesystem::path path_;
 
             /// \brief Constructor
             /// \param hash File hash
             /// \param path File path
             explicit HashFile(const std::string & hash,
-                              const boost::filesystem::path & path);
+                              const filesystem::path & path);
 
         public:
 
@@ -59,14 +61,14 @@ namespace arke {
             const std::string & hash() const;
 
             /// \return Path
-            const boost::filesystem::path path() const;
+            const filesystem::path path() const;
 
         public:
 
             /// \brief Create hash file from path
             /// \param path File path
             /// \return Hash file containing hash
-            static std::shared_ptr<HashFile> from(const boost::filesystem::path & path);
+            static std::shared_ptr<HashFile> from(const filesystem::path & path);
     };
 
 } /* namespace arke */

@@ -13,26 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Dependency_test.cxx
+ * FilesGroup_test.cxx
  *
- *  Created on: 25 juil. 2017
+ *  Created on: 3 août 2017
  *      Author: dami
  */
 
+#include <arke/FilesGroup.hxx>
 #include "../catch/catch.hpp"
-#include "arke/Dependency.hxx"
-#include "arke/DependencyBuilder.hxx"
-#include "arke/Package.hxx"
 
 namespace arke {
 
-    TEST_CASE( "Simple test package", "[package]" ) {
+    TEST_CASE( "Files group", "[files]" ) {
 
-        Package & package = *new Package { DependencyBuilder { }.organizationName("org").name("package").build() };
+        // Create files group directory test
+        filesystem::path directory{"filesGroups"};
+        filesystem::create_directories(directory);
 
-        REQUIRE(&package);
+        // Create file 1
+        filesystem::path file1 = directory.append("file1");
 
-        delete &package;
+        HashFilePtr hashFile1 = HashFile::from(file1);
+
+        FilesGroupPtr filesGroup = std::make_shared<FilesGroup>("lib", std::set<HashFilePtr>{hashFile1});
+
+        REQUIRE("lib" == filesGroup->name());
+        REQUIRE(0 == filesGroup->files().size());
     }
-
 } /* namespace arke */

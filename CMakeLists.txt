@@ -45,6 +45,7 @@ add_library(
     Sources/arke/DependencyBuilder.cxx Sources/arke/DependencyBuilder.hxx
     Sources/arke/Package.cxx Sources/arke/Package.hxx
     Sources/arke/HashFile.cxx Sources/arke/HashFile.hxx
+    Sources/arke/FilesGroup.cxx Sources/arke/FilesGroup.hxx
 )
 target_include_directories(
 	arke
@@ -69,6 +70,7 @@ add_executable(
 	Tests/arke/DependencyDefinition_test.cxx
 	Tests/arke/VersionMatcher_test.cxx
 	Tests/arke/HashFile_test.cxx
+	Tests/arke/FilesGroup_test.cxx
 	Tests/arke/tools/SHAGenerator_test.cxx
 )
 target_include_directories(

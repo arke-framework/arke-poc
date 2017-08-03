@@ -52,7 +52,7 @@ namespace arke {
     }
 
     // Generate SHA of file
-    std::string SHAGenerator::hashFile(const path & path) const {
+    std::string SHAGenerator::hashFile(const filesystem::path & path) const {
 
 
 
@@ -90,9 +90,6 @@ namespace arke {
 
         // Create internal buffer
         std::vector<uint8_t> buffer(2048);
-
-        // Read stream
-        filesystem::ifstream stream(path);
 
         //update hash computations with read data
         hash->update(reinterpret_cast<const uint8_t*>(strToEncode.c_str()), strToEncode.length());
