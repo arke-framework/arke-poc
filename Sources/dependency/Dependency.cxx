@@ -13,34 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * DependencyDefinition.cxx
+ * Dependency.cxx
  *
- *  Created on: 26 juil. 2017
+ *  Created on: 25 juil. 2017
  *      Author: dami
  */
 
-#include "DependencyDefinition.hxx"
+#include <dependency/Dependency.hxx>
 
 namespace arke {
 
-    // Constructor
-    DependencyDefinition::DependencyDefinition(const std::string & id, const std::string & version) :
-            id_(id), version_(version) {
+    Dependency::Dependency(const std::string & name, const std::string & organization) :
+            name_(name), organization_(organization) {
 
     }
 
-    // Destructor
-    DependencyDefinition::~DependencyDefinition() {
+    Dependency::~Dependency() {
     }
 
     // Dependency id
-    const std::string DependencyDefinition::id() const {
-        return id_;
+    const std::string Dependency::id() const {
+        return (organization_ + '/' + name_);
     }
 
-    // Version matcher
-    const std::string DependencyDefinition::version() const {
-        return version_;
+    // Package name
+    const std::string & Dependency::name() const {
+        return name_;
+    }
+
+    // Package organization
+    const std::string & Dependency::organization() const {
+        return organization_;
     }
 
 } /* namespace arke */

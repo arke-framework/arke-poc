@@ -13,34 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Package.cxx
+ * PackageBuilder.cxx
  *
- *  Created on: 25 juil. 2017
+ *  Created on: 5 août 2017
  *      Author: dami
  */
 
-#include "Package.hxx"
+#include <package/PackageBuilder.hxx>
 
 namespace arke {
 
     // Constructor
-    Package::Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups) : dependency_(dependency), fileGroups_(fileGroups) {
+    PackageBuilder::PackageBuilder() {
 
     }
 
     // Destructor
-    Package::~Package() {
-
+    PackageBuilder::~PackageBuilder() {
     }
 
-    // Dependency
-    std::shared_ptr<Dependency> Package::dependency() const {
-        return dependency_;
+
+    // Set dependency
+    PackageBuilder & PackageBuilder::dependency(DependencyPtr dependency) {
+        this->dependency_ = dependency;
+        return *this;
     }
 
-    // Files groups
-    std::set<FilesGroupPtr> Package::fileGroups() const {
-        return fileGroups_;
+    // Build package
+    PackagePtr PackageBuilder::build() {
+
+        PackagePtr package;
+
+        if (!dependency_) {
+            throw std::runtime_error{"No dependency set"};
+        }
+
+        return std::shared_ptr<Package>{
+            new Package{dependency_, fileGroups_}
+        };
     }
 
 } /* namespace arke */

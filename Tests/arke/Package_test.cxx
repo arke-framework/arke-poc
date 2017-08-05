@@ -20,45 +20,50 @@
  */
 
 #include "../catch/catch.hpp"
-#include "arke/Dependency.hxx"
-#include "arke/DependencyBuilder.hxx"
-#include "arke/Package.hxx"
+#include <dependency/Dependency.hxx>
+#include <dependency/DependencyBuilder.hxx>
+#include <package/Package.hxx>
+#include <package/PackageBuilder.hxx>
 
 namespace arke {
 
     TEST_CASE( "Simple test package", "[package]" ) {
 
-        Package & package = *new Package { DependencyBuilder { }.organizationName("org").name("package").build() };
+        PackageBuilder & packageBuilder = *new PackageBuilder { };
 
-        REQUIRE(&package);
+        PackagePtr package = packageBuilder.dependency(DependencyBuilder { }.organizationName("org").name("package").build()).build();
 
-        REQUIRE("org" == package.dependency()->organization());
-        REQUIRE("package" == package.dependency()->name());
-        REQUIRE("org/package" == package.dependency()->id());
+        REQUIRE(package);
 
-        REQUIRE(0 == package.fileGroups().size());
+        REQUIRE("org" == package->dependency()->organization());
+        REQUIRE("package" == package->dependency()->name());
+        REQUIRE("org/package" == package->dependency()->id());
 
-        delete &package;
+        REQUIRE(0 == package->fileGroups().size());
+
+        delete &packageBuilder;
     }
 
     TEST_CASE( "Package with files", "[package]" ) {
 
-        Package & package = *new Package {
-            DependencyBuilder { }.organizationName("org").name("package").build(),
-            std::set<FilesGroupPtr>{
+         PackagePtr package = PackageBuilder {}
+             .dependency(DependencyBuilder { }.organizationName("org").name("package").build())
+             //std::set<FilesGroupPtr>{
 
-            }
-        };
+             //}
+             .build();
 
-        REQUIRE(&package);
+         REQUIRE(package);
 
-        REQUIRE("org" == package.dependency()->organization());
-        REQUIRE("package" == package.dependency()->name());
-        REQUIRE("org/package" == package.dependency()->id());
+         REQUIRE("org" == package->dependency()->organization());
+         REQUIRE("package" == package->dependency()->name());
+         REQUIRE("org/package" == package->dependency()->id());
 
-        REQUIRE(0 == package.fileGroups().size());
+         REQUIRE(0 == package->fileGroups().size());
+    }
 
-        delete &package;
+    TEST_CASE( "Test error package", "[package]" ) {
+        REQUIRE_THROWS(PackageBuilder {}.build());
     }
 
 } /* namespace arke */

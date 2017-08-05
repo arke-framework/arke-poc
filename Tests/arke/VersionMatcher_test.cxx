@@ -20,7 +20,7 @@
  */
 
 #include "../catch/catch.hpp"
-#include <arke/VersionMatcher.hxx>
+#include <version/VersionMatcher.hxx>
 
 namespace arke {
 

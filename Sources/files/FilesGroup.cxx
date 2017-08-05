@@ -13,35 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * HashFile_test.cxx
+ * FilesGroup.cxx
  *
- *  Created on: 1 août 2017
+ *  Created on: 3 août 2017
  *      Author: dami
  */
 
-#include "../catch/catch.hpp"
-#include <files/HashFile.hxx>
+#include <files/FilesGroup.hxx>
 
-#include <iostream>
+#include <exception>
+#include <boost/filesystem.hpp>
 
 namespace arke {
 
-    TEST_CASE( "Hash file", "[crypto]" ) {
+    // Constructor
+    FilesGroup::FilesGroup(const std::string & name, const std::set<HashFilePtr> & files) : name_(name), files_(files) {
 
-        boost::filesystem::path path{"file1.txt"};
+    }
 
-        if(boost::filesystem::exists(path)) {
-            boost::filesystem::remove(path);
-        }
+    // Destructor
+    FilesGroup::~FilesGroup() {
+    }
 
-        boost::filesystem::ofstream sha1Stream { path };
-        sha1Stream << "test";
-        sha1Stream.close();
+    // group name
+    const std::string & FilesGroup::name() const {
+        return name_;
+    }
 
-        auto hashFile = HashFile::from(path);
-
-        REQUIRE("9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08" == hashFile->hash());
-        REQUIRE("file1.txt" == hashFile->path());
+    // All files in group
+    const std::set<HashFilePtr> & FilesGroup::files() const {
+        return files_;
     }
 
 } /* namespace arke */

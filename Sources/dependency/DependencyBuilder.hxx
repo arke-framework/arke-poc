@@ -22,7 +22,7 @@
 #ifndef SOURCES_ARKE_DEPENDENCYBUILDER_HXX_
 #define SOURCES_ARKE_DEPENDENCYBUILDER_HXX_
 
-#include "Dependency.hxx"
+#include <dependency/Dependency.hxx>
 
 namespace arke {
 

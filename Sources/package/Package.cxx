@@ -13,38 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * HashFile.cxx
+ * Package.cxx
  *
- *  Created on: 1 août 2017
+ *  Created on: 25 juil. 2017
  *      Author: dami
  */
 
-#include "HashFile.hxx"
-#include "tools/SHAGenerator.hxx"
+#include <package/Package.hxx>
 
 namespace arke {
 
     // Constructor
-    HashFile::HashFile(const std::string & hash, const filesystem::path & path) : hash_(hash), path_(path) {
+    Package::Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups) : dependency_(dependency), fileGroups_(fileGroups) {
+
     }
 
     // Destructor
-    HashFile::~HashFile() {
+    Package::~Package() {
+
     }
 
-    // Hash
-    const std::string & HashFile::hash() const {
-        return hash_;
+    // Dependency
+    std::shared_ptr<Dependency> Package::dependency() const {
+        return dependency_;
     }
 
-    // Path
-    const filesystem::path HashFile::path() const {
-        return path_;
-    }
-
-    // Create hash file from path
-    std::shared_ptr<HashFile> HashFile::from(const filesystem::path & path) {
-        return std::shared_ptr<HashFile> { new HashFile { SHAGenerator { HashFunction::SHA256 }.hashFile(path), path } };
+    // Files groups
+    std::set<FilesGroupPtr> Package::fileGroups() const {
+        return fileGroups_;
     }
 
 } /* namespace arke */

@@ -13,54 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * FilesGroup.cxx
+ * FilesGroupBuilder.cxx
  *
- *  Created on: 3 août 2017
+ *  Created on: 6 août 2017
  *      Author: dami
  */
 
-#include "FilesGroup.hxx"
-
-#include <exception>
-#include <boost/filesystem.hpp>
+#include <files/FilesGroupBuilder.hxx>
 
 namespace arke {
 
     // Constructor
-    FilesGroup::FilesGroup(const std::string & name, const std::set<HashFilePtr> & files) : name_(name), files_(files) {
-
+    FilesGroupBuilder::FilesGroupBuilder() {
     }
 
     // Destructor
-    FilesGroup::~FilesGroup() {
+    FilesGroupBuilder::~FilesGroupBuilder() {
     }
 
-    // group name
-    const std::string & FilesGroup::name() const {
-        return name_;
+    // Set files group name
+    FilesGroupBuilder & FilesGroupBuilder::name(const std::string & name) {
+            this->name_ = name;
+            return *this;
     }
 
-    // All files in group
-    const std::set<HashFilePtr> & FilesGroup::files() const {
-        return files_;
+    // Append file to group
+    FilesGroupBuilder & FilesGroupBuilder::append(HashFilePtr hashFile) {
+        if (hashFile) {
+            this->files_.insert(hashFile);
+        }
+        return *this;
     }
 
-    // Create Files group from directory
-    FilesGroupPtr FilesGroup::from(const std::string & name, const filesystem::path & path) {
+    // Create Files group builder from directory
+    FilesGroupBuilder FilesGroupBuilder::from(const filesystem::path & path) {
 
         // Test directory
         if (!filesystem::exists(path) || !filesystem::is_directory(path)) {
             throw std::runtime_error{"Path is not a directory"};
         }
 
-        std::set<HashFilePtr> hashFiles{};
+        // Create builder
+        FilesGroupBuilder filesGroupBuilder{};
 
         // Read all files
         for(auto& p: filesystem::directory_iterator(path)) {
-            hashFiles.insert(HashFile::from(p));
+            filesGroupBuilder.append(HashFile::from(p));
         }
 
-        return std::make_shared<FilesGroup>(name, hashFiles);
+        return filesGroupBuilder;
+    }
+
+    // Build files group
+    FilesGroupPtr FilesGroupBuilder::build() {
+        return FilesGroupPtr{new FilesGroup{name_, files_}};
     }
 
 } /* namespace arke */

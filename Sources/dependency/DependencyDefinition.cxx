@@ -13,35 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * HashFile_test.cxx
+ * DependencyDefinition.cxx
  *
- *  Created on: 1 août 2017
+ *  Created on: 26 juil. 2017
  *      Author: dami
  */
 
-#include "../catch/catch.hpp"
-#include <files/HashFile.hxx>
-
-#include <iostream>
+#include <dependency/DependencyDefinition.hxx>
 
 namespace arke {
 
-    TEST_CASE( "Hash file", "[crypto]" ) {
+    // Constructor
+    DependencyDefinition::DependencyDefinition(const std::string & id, const std::string & version) :
+            id_(id), version_(version) {
 
-        boost::filesystem::path path{"file1.txt"};
+    }
 
-        if(boost::filesystem::exists(path)) {
-            boost::filesystem::remove(path);
-        }
+    // Destructor
+    DependencyDefinition::~DependencyDefinition() {
+    }
 
-        boost::filesystem::ofstream sha1Stream { path };
-        sha1Stream << "test";
-        sha1Stream.close();
+    // Dependency id
+    const std::string DependencyDefinition::id() const {
+        return id_;
+    }
 
-        auto hashFile = HashFile::from(path);
-
-        REQUIRE("9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08" == hashFile->hash());
-        REQUIRE("file1.txt" == hashFile->path());
+    // Version matcher
+    const std::string DependencyDefinition::version() const {
+        return version_;
     }
 
 } /* namespace arke */

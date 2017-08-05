@@ -13,37 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Dependency.cxx
+ * HashFile.cxx
  *
- *  Created on: 25 juil. 2017
+ *  Created on: 1 août 2017
  *      Author: dami
  */
 
-#include "Dependency.hxx"
+#include <files/HashFile.hxx>
+#include <crypto/SHAGenerator.hxx>
 
 namespace arke {
 
-    Dependency::Dependency(const std::string & name, const std::string & organization) :
-            name_(name), organization_(organization) {
-
+    // Constructor
+    HashFile::HashFile(const std::string & hash, const filesystem::path & path) : hash_(hash), path_(path) {
     }
 
-    Dependency::~Dependency() {
+    // Destructor
+    HashFile::~HashFile() {
     }
 
-    // Dependency id
-    const std::string Dependency::id() const {
-        return (organization_ + '/' + name_);
+    // Hash
+    const std::string & HashFile::hash() const {
+        return hash_;
     }
 
-    // Package name
-    const std::string & Dependency::name() const {
-        return name_;
+    // Path
+    const filesystem::path HashFile::path() const {
+        return path_;
     }
 
-    // Package organization
-    const std::string & Dependency::organization() const {
-        return organization_;
+    // Create hash file from path
+    std::shared_ptr<HashFile> HashFile::from(const filesystem::path & path) {
+        return std::shared_ptr<HashFile> { new HashFile { SHAGenerator { HashFunction::SHA256 }.hashFile(path), path } };
     }
 
 } /* namespace arke */

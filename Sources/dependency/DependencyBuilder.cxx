@@ -19,7 +19,7 @@
  *      Author: dami
  */
 
-#include "DependencyBuilder.hxx"
+#include <dependency/DependencyBuilder.hxx>
 
 #include <exception>
 

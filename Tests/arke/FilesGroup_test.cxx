@@ -19,7 +19,8 @@
  *      Author: dami
  */
 
-#include <arke/FilesGroup.hxx>
+#include <files/FilesGroup.hxx>
+#include <files/FilesGroupBuilder.hxx>
 #include "../catch/catch.hpp"
 #include <fstream>
 #include <map>
@@ -81,11 +82,16 @@ namespace arke {
 
         REQUIRE(hashFiles.empty());
 
-        auto filesGroup1 = FilesGroup::from("lib", directory);
+        auto filesGroup1 = FilesGroupBuilder::from(directory).name("lib").build();
         REQUIRE(3 == filesGroup1->files().size());
 
         delete filesGroup;
 
-        REQUIRE_THROWS(FilesGroup::from("lib", "invalid"));
+        REQUIRE_THROWS(FilesGroupBuilder::from("invalid"));
+    }
+
+    TEST_CASE( "Files group builder", "[files]" ) {
+        FilesGroupBuilder * builder = new FilesGroupBuilder{};
+        delete builder;
     }
 } /* namespace arke */

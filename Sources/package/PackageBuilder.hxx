@@ -13,56 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Package.hxx
+ * PackageBuilder.hxx
  *
- *  Created on: 25 juil. 2017
+ *  Created on: 5 août 2017
  *      Author: dami
  */
 
-#ifndef SOURCES_ARKE_PACKAGE_HXX_
-#define SOURCES_ARKE_PACKAGE_HXX_
+#ifndef SOURCES_PACKAGE_PACKAGEBUILDER_HXX_
+#define SOURCES_PACKAGE_PACKAGEBUILDER_HXX_
 
-#include <memory>
-#include <set>
-
-#include "Dependency.hxx"
-#include "FilesGroup.hxx"
+#include <package/Package.hxx>
+#include <files/FilesGroup.hxx>
 
 namespace arke {
 
-    class Package;
-    using PackagePtr = std::shared_ptr<Package>;
-
-    /// \brief Define a package
-    class Package {
+    /// \brief Package builder
+    class PackageBuilder {
 
         private:
 
             /// \brief Dependency
-            std::shared_ptr<Dependency> dependency_;
+            DependencyPtr dependency_;
 
             /// \brief Files groups
             std::set<FilesGroupPtr> fileGroups_;
-
         public:
 
             /// \brief Constructor
-            /// \param dependency Dependency
-            /// \param groups Set of files groups
-            Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups_ = {});
+            PackageBuilder();
 
             /// \brief Destructor
-            virtual ~Package();
+            virtual ~PackageBuilder();
 
         public:
 
-            /// \return Dependency
-            std::shared_ptr<Dependency> dependency() const;
+            /// \brief Set dependency
+            /// \param dependency Dependency
+            /// \return this builder
+            PackageBuilder & dependency(DependencyPtr dependency);
 
-            /// \return Files groups
-            std::set<FilesGroupPtr> fileGroups() const;
+            /// \return Build package
+            PackagePtr build();
     };
 
 } /* namespace arke */
 
-#endif /* SOURCES_ARKE_PACKAGE_HXX_ */
+#endif /* SOURCES_PACKAGE_PACKAGEBUILDER_HXX_ */

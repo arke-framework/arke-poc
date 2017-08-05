@@ -20,7 +20,7 @@
  */
 
 #include "../../catch/catch.hpp"
-#include "arke/tools/SHAGenerator.hxx"
+#include <crypto/SHAGenerator.hxx>
 #include <boost/filesystem/operations.hpp>
 
 namespace arke {

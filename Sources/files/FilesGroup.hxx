@@ -23,7 +23,7 @@
 #define SOURCES_ARKE_FILESGROUP_HXX_
 
 #include <memory>
-#include "HashFile.hxx"
+#include <files/HashFile.hxx>
 #include <set>
 #include <string>
 
@@ -34,6 +34,9 @@ namespace arke {
 
     /// \brief Group files and set a directory name
     class FilesGroup {
+
+            // Create friend class
+            friend class FilesGroupBuilder;
 
         private:
 
@@ -53,18 +56,13 @@ namespace arke {
             /// \brief Destructor
             virtual ~FilesGroup();
 
+        public:
+
             /// \return group name
             const std::string & name() const;
 
             /// \return All files in group
             const std::set<HashFilePtr> & files() const;
-
-        public:
-
-            /// \brief Create Files group from directory
-            /// \param name Group name
-            /// \param path Path directory
-            static FilesGroupPtr from(const std::string & name, const filesystem::path & path);
     };
 
 } /* namespace arke */

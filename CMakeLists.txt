@@ -38,14 +38,21 @@ add_definitions(${COVERAGE_COMPILE_FLAGS})
 # Add executable
 add_library(
     arke
-    Sources/arke/Dependency.cxx Sources/arke/Dependency.hxx
-    Sources/arke/tools/SHAGenerator.cxx Sources/arke/tools/SHAGenerator.hxx
-    Sources/arke/DependencyDefinition.cxx Sources/arke/DependencyDefinition.hxx
-    Sources/arke/VersionMatcher.cxx Sources/arke/VersionMatcher.hxx
-    Sources/arke/DependencyBuilder.cxx Sources/arke/DependencyBuilder.hxx
-    Sources/arke/Package.cxx Sources/arke/Package.hxx
-    Sources/arke/HashFile.cxx Sources/arke/HashFile.hxx
-    Sources/arke/FilesGroup.cxx Sources/arke/FilesGroup.hxx
+    
+    Sources/crypto/SHAGenerator.cxx Sources/crypto/SHAGenerator.hxx
+    
+    Sources/dependency/Dependency.cxx Sources/dependency/Dependency.hxx
+    Sources/dependency/DependencyDefinition.cxx Sources/dependency/DependencyDefinition.hxx
+    Sources/dependency/DependencyBuilder.cxx Sources/dependency/DependencyBuilder.hxx
+    
+    Sources/files/HashFile.cxx Sources/files/HashFile.hxx
+    Sources/files/FilesGroup.cxx Sources/files/FilesGroup.hxx
+    Sources/files/FilesGroupBuilder.cxx Sources/files/FilesGroupBuilder.hxx
+    
+    Sources/package/Package.cxx Sources/package/Package.hxx
+    Sources/package/PackageBuilder.cxx Sources/package/PackageBuilder.hxx
+    
+    Sources/version/VersionMatcher.cxx Sources/version/VersionMatcher.hxx
 )
 target_include_directories(
 	arke
@@ -59,7 +66,12 @@ target_link_libraries(
 	${COVERAGE_LINK_FLAGS}
 	${BOTAN_LIBRARIES}
 )
-
+target_include_directories(
+	arke
+	
+	PRIVATE
+		Sources
+)
 
 # Add test executable
 add_executable(

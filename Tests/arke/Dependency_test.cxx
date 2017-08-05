@@ -20,8 +20,8 @@
  */
 
 #include "../catch/catch.hpp"
-#include "arke/Dependency.hxx"
-#include "arke/DependencyBuilder.hxx"
+#include <dependency/Dependency.hxx>
+#include <dependency/DependencyBuilder.hxx>
 
 namespace arke {
 
