@@ -84,6 +84,7 @@ add_executable(
 	Tests/arke/HashFile_test.cxx
 	Tests/arke/FilesGroup_test.cxx
 	Tests/arke/tools/SHAGenerator_test.cxx
+	Tests/arke/PackageTools.hxx
 )
 target_include_directories(
 	arke_test

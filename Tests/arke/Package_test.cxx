@@ -24,6 +24,8 @@
 #include <dependency/DependencyBuilder.hxx>
 #include <package/Package.hxx>
 #include <package/PackageBuilder.hxx>
+#include <files/FilesGroupBuilder.hxx>
+#include "PackageTools.hxx"
 
 namespace arke {
 
@@ -46,24 +48,33 @@ namespace arke {
 
     TEST_CASE( "Package with files", "[package]" ) {
 
-         PackagePtr package = PackageBuilder {}
-             .dependency(DependencyBuilder { }.organizationName("org").name("package").build())
-             //std::set<FilesGroupPtr>{
+        // Package directory generator
+        test::PackageDirectoryGenerator generator { "test_package_files1" };
+        auto group1 = generator.group("lib");
+        auto file1 = group1.createFile("file1");
 
-             //}
-             .build();
+        FilesGroupPtr filesGroup = FilesGroupBuilder{}
+                        .name("lib")
+                        .append(HashFile::from(file1))
+                        .build();
 
-         REQUIRE(package);
+        PackagePtr package = PackageBuilder { }.dependency(DependencyBuilder { }.organizationName("org").name("package").build())
+                .addFilesGroup(filesGroup)
+                .build();
 
-         REQUIRE("org" == package->dependency()->organization());
-         REQUIRE("package" == package->dependency()->name());
-         REQUIRE("org/package" == package->dependency()->id());
+        REQUIRE(package);
 
-         REQUIRE(0 == package->fileGroups().size());
+        REQUIRE("org" == package->dependency()->organization());
+        REQUIRE("package" == package->dependency()->name());
+        REQUIRE("org/package" == package->dependency()->id());
+
+        REQUIRE(1 == package->fileGroups().size());
+        FilesGroupPtr filesGroup_(*(package->fileGroups().begin()));
+        REQUIRE(1 == filesGroup_->files().size());
     }
 
     TEST_CASE( "Test error package", "[package]" ) {
-        REQUIRE_THROWS(PackageBuilder {}.build());
+        REQUIRE_THROWS(PackageBuilder { }.build());
     }
 
 } /* namespace arke */
