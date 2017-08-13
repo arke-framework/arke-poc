@@ -20,6 +20,13 @@ find_library(BOTAN_LIBRARIES NAMES botan botan-2)
 message("-- Includes ${BOTAN_INCLUDE_DIRS}")
 message("-- Library ${BOTAN_LIBRARIES}")
 
+# Find xz / lzma
+find_path(LIBARCHIVE_INCLUDE_DIRS NAMES archive.h)
+find_library(LIBARCHIVE_LIBRARIES NAMES archive)
+
+message("-- Includes ${LIBARCHIVE_INCLUDE_DIRS}")
+message("-- Library ${LIBARCHIVE_LIBRARIES}")
+
 message("-- Compiler familly ${CMAKE_CXX_COMPILER_ID}")
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	# Add coverage
@@ -53,18 +60,23 @@ add_library(
     Sources/package/PackageBuilder.cxx Sources/package/PackageBuilder.hxx
     
     Sources/version/VersionMatcher.cxx Sources/version/VersionMatcher.hxx
+    
+    Sources/compression/XzCompressor.cxx Sources/compression/XzCompressor.hxx
+    Sources/compression/XzDecompressor.cxx Sources/compression/XzDecompressor.hxx
 )
 target_include_directories(
 	arke
 	
 	PRIVATE
 		${BOTAN_INCLUDE_DIRS}
+		${LIBARCHIVE_INCLUDE_DIRS}
 		${Boost_INCLUDE_DIRS}
 )
 target_link_libraries(
 	arke
 	${COVERAGE_LINK_FLAGS}
 	${BOTAN_LIBRARIES}
+	${LIBARCHIVE_LIBRARIES}
 )
 target_include_directories(
 	arke
@@ -85,6 +97,8 @@ add_executable(
 	Tests/arke/FilesGroup_test.cxx
 	Tests/arke/tools/SHAGenerator_test.cxx
 	Tests/arke/PackageTools.hxx
+	Tests/arke/XzCompressor_test.cxx
+	Tests/arke/XzDecompressor_test.cxx
 )
 target_include_directories(
 	arke_test
