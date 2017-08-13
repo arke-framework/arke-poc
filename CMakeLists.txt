@@ -53,6 +53,7 @@ add_library(
     Sources/package/PackageBuilder.cxx Sources/package/PackageBuilder.hxx
     
     Sources/version/VersionMatcher.cxx Sources/version/VersionMatcher.hxx
+    Sources/compression/XzCompressor.cxx Sources/compression/XzCompressor.hxx
 )
 target_include_directories(
 	arke
@@ -85,6 +86,7 @@ add_executable(
 	Tests/arke/FilesGroup_test.cxx
 	Tests/arke/tools/SHAGenerator_test.cxx
 	Tests/arke/PackageTools.hxx
+	Tests/arke/XzCompressor_test.cxx
 )
 target_include_directories(
 	arke_test
