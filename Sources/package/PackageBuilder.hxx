@@ -36,7 +36,8 @@ namespace arke {
             DependencyPtr dependency_;
 
             /// \brief Files groups
-            std::set<FilesGroupPtr> fileGroups_;
+            std::set<FilesGroupPtr> filesGroups_;
+
         public:
 
             /// \brief Constructor
@@ -51,6 +52,10 @@ namespace arke {
             /// \param dependency Dependency
             /// \return this builder
             PackageBuilder & dependency(DependencyPtr dependency);
+
+            /// \brief Add files group to the package
+            /// \param filesGroup New files group to add
+            PackageBuilder & addFilesGroup(FilesGroupPtr filesGroup);
 
             /// \return Build package
             PackagePtr build();

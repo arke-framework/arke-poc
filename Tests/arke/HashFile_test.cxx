@@ -22,25 +22,16 @@
 #include "../catch/catch.hpp"
 #include <files/HashFile.hxx>
 
-#include <iostream>
+#include "PackageTools.hxx"
 
 namespace arke {
 
     TEST_CASE( "Hash file", "[crypto]" ) {
 
-        boost::filesystem::path path{"file1.txt"};
-
-        if(boost::filesystem::exists(path)) {
-            boost::filesystem::remove(path);
-        }
-
-        boost::filesystem::ofstream sha1Stream { path };
-        sha1Stream << "test";
-        sha1Stream.close();
-
+        auto path = test::FileDirectoryGenerator::createFile("file1.txt", true);
         auto hashFile = HashFile::from(path);
 
-        REQUIRE("9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08" == hashFile->hash());
+        REQUIRE("55AE75D991C770D8F3EF07CBFDE124FFCE9C420DA5DB6203AFAB700B27E10CF9" == hashFile->hash());
         REQUIRE("file1.txt" == hashFile->path());
     }
 

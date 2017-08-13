@@ -39,6 +39,14 @@ namespace arke {
         return *this;
     }
 
+    // Add files group to the package
+    PackageBuilder & PackageBuilder::addFilesGroup(FilesGroupPtr filesGroup) {
+        if (filesGroup) {
+            filesGroups_.insert(filesGroup);
+        }
+        return *this;
+    }
+
     // Build package
     PackagePtr PackageBuilder::build() {
 
@@ -49,7 +57,7 @@ namespace arke {
         }
 
         return std::shared_ptr<Package>{
-            new Package{dependency_, fileGroups_}
+            new Package{dependency_, filesGroups_}
         };
     }
 

@@ -22,8 +22,9 @@
 #include <files/FilesGroup.hxx>
 #include <files/FilesGroupBuilder.hxx>
 #include "../catch/catch.hpp"
-#include <fstream>
+
 #include <map>
+#include "PackageTools.hxx"
 
 namespace arke {
 
@@ -35,17 +36,17 @@ namespace arke {
 
         // Create file 1
         filesystem::path file1 = filesystem::path{directory}.append("file1");
-        std::ofstream{file1.c_str()};
+        test::FileDirectoryGenerator::createFile(file1);
         auto hashFile1 = HashFile::from(file1);
 
         // Create file 2
         filesystem::path file2 = filesystem::path{directory}.append("file2");
-        std::ofstream{file2.c_str()};
+        test::FileDirectoryGenerator::createFile(file2);
         auto hashFile2 = HashFile::from(file2);
 
         // Create file 3
         filesystem::path file3 = filesystem::path{directory}.append("file3");
-        std::ofstream{file3.c_str()};
+        test::FileDirectoryGenerator::createFile(file3);
         auto hashFile3 = HashFile::from(file3);
 
         FilesGroup * filesGroup = new FilesGroup{"lib", std::set<HashFilePtr>{
