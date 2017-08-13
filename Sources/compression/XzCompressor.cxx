@@ -26,17 +26,21 @@
 namespace arke {
 
     // Init compressor
-    XzCompressor::XzCompressor(filesystem::path destination) {
+    XzCompressor::XzCompressor(filesystem::path destination) : strm_(LZMA_STREAM_INIT), outputStream_(destination) {
 
-        // Create
-        lzma_stream strm_ = LZMA_STREAM_INIT;
+        // FIXME Set preset
+        uint32_t preset = 6;
 
-        // Init decoder
-        lzma_ret ret = lzma_stream_decoder(&strm_, UINT64_MAX, LZMA_CONCATENATED);
+        // Initialize the encoder using a preset. Set the integrity to check
+        // to CRC64, which is the default in the xz command line tool. If
+        // the .xz file needs to be decompressed with XZ Embedded, use
+        // LZMA_CHECK_CRC32 instead.
+        lzma_ret ret = lzma_easy_encoder(&strm_, preset, LZMA_CHECK_CRC64);
         if (ret != LZMA_OK) {
             throw std::runtime_error { "Unable to init LZMA decoder" };
         }
 
+        // Init strm
         strm_.next_in = NULL;
         strm_.avail_in = 0;
         strm_.next_out = outbuf_;
@@ -48,10 +52,19 @@ namespace arke {
 
         // End
         lzma_end(&strm_);
+
+        // Close
+        outputStream_.close();
     }
 
     // Compress a file to a path
     void XzCompressor::compress(filesystem::path source) {
+        filesystem::ifstream istream{source};
+        compress(istream);
+    }
+
+    // Compress a file to a path
+    void XzCompressor::compress(std::istream & inputStream) {
 
         // When LZMA_CONCATENATED flag was used when initializing the decoder,
         // we need to tell lzma_code() when there will be no more input.
@@ -67,40 +80,37 @@ namespace arke {
 
         while (true) {
 
-            if (strm_.avail_in == 0) { // && !feof(infile)) {
-                //strm_.next_in = inbuf;
-                //strm_.avail_in = fread(inbuf, 1, sizeof(inbuf),
-                //        infile);
+            if (strm_.avail_in == 0 && !inputStream.eof()) {
 
-                //if (ferror(infile)) {
-                //    fprintf(stderr, "%s: Read error: %s\n",
-                //            inname, strerror(errno));
-                //    return false;
-                //}
+                // read stream in inbuff
+                auto buffSize = inputStream.readsome(reinterpret_cast<char*>(inbuf_), BUFSIZ);
+
+                // Set buffer in struct
+                strm_.next_in = inbuf_;
+                strm_.avail_in = buffSize;
 
                 // Once the end of the input file has been reached,
                 // we need to tell lzma_code() that no more input
                 // will be coming. As said before, this isn't required
                 // if the LZMA_CONATENATED flag isn't used when
                 // initializing the decoder.
-                //if (feof(infile)) {
-                //    action = LZMA_FINISH;
-                //}
+                if (buffSize || inputStream.eof()) {
+                    action = LZMA_FINISH;
+                }
             }
 
+            // Set lzma action
             lzma_ret ret = lzma_code(&strm_, action);
 
-            if (strm_.avail_out == 0 || ret == LZMA_STREAM_END) {
+            if (/*strm_.avail_out == 0 || */ret == LZMA_STREAM_END) {
 
                 // Xrite size
                 ssize_t write_size = sizeof(outbuf_) - strm_.avail_out;
 
-                //if (fwrite(outbuf, 1, write_size, outfile) != write_size) {
-                //    fprintf(stderr, "Write error: %s\n",
-                //            strerror(errno));
-                //    return false;
-                //}
+                // Write result
+                outputStream_.write(reinterpret_cast<char *>(outbuf_), write_size);
 
+                // Reset output buff
                 strm_.next_out = outbuf_;
                 strm_.avail_out = sizeof(outbuf_);
             }

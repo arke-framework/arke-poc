@@ -20,6 +20,13 @@ find_library(BOTAN_LIBRARIES NAMES botan botan-2)
 message("-- Includes ${BOTAN_INCLUDE_DIRS}")
 message("-- Library ${BOTAN_LIBRARIES}")
 
+# Find xz / lzma
+find_path(LZMA_INCLUDE_DIRS NAMES lzma.h)
+find_library(LZMA_LIBRARIES NAMES lzma)
+
+message("-- Includes ${LZMA_INCLUDE_DIRS}")
+message("-- Library ${LZMA_LIBRARIES}")
+
 message("-- Compiler familly ${CMAKE_CXX_COMPILER_ID}")
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	# Add coverage
@@ -62,12 +69,14 @@ target_include_directories(
 	
 	PRIVATE
 		${BOTAN_INCLUDE_DIRS}
+		${LZMA_INCLUDE_DIRS}
 		${Boost_INCLUDE_DIRS}
 )
 target_link_libraries(
 	arke
 	${COVERAGE_LINK_FLAGS}
 	${BOTAN_LIBRARIES}
+	${LZMA_LIBRARIES}
 )
 target_include_directories(
 	arke

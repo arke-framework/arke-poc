@@ -31,9 +31,9 @@ namespace arke {
         auto path = test::FileDirectoryGenerator::createFile("file1_not_compressed.txt", true);
 
         // Create compressor
-        XzDecompressor decompressor{"file1_not_compressed.txt.xz"};
+        //XzDecompressor decompressor{"file1_not_compressed.txt.xz"};
 
         // Compress
-        decompressor.decompress(path);
+        //decompressor.decompress(path);
     }
 } /* namespace arke */

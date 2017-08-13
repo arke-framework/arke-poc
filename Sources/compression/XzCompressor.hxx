@@ -48,6 +48,9 @@ namespace arke {
             /// \brief Output buffer
             uint8_t outbuf_[BUFSIZ];
 
+            /// \brief Output stream
+            filesystem::ofstream outputStream_;
+
         public:
 
             /// \brief Constructor
@@ -56,6 +59,10 @@ namespace arke {
 
             /// \brief Destructor
             virtual ~XzCompressor();
+
+            /// \brief Compress a stream
+            /// \param stream Input stream
+            void compress(std::istream & stream);
 
             /// \brief Compress a file to a path
             /// \param source Source path
