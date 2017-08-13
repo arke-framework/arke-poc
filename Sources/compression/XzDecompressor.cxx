@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * XzCompressor.cxx
+ * XzDecompressor.cxx
  *
- *  Created on: 12 août 2017
+ *  Created on: 13 août 2017
  *      Author: dami
  */
 
-#include "XzCompressor.hxx"
-
-#include <exception>
+#include "XzDecompressor.hxx"
 
 namespace arke {
 
     // Init compressor
-    XzCompressor::XzCompressor(filesystem::path destination) {
+    XzDecompressor::XzDecompressor(filesystem::path destination) {
 
         // Create
         lzma_stream strm_ = LZMA_STREAM_INIT;
@@ -44,15 +42,16 @@ namespace arke {
     }
 
     // Destructor
-    XzCompressor::~XzCompressor() {
+    XzDecompressor::~XzDecompressor() {
 
         // End
         lzma_end(&strm_);
     }
 
     // Compress a file to a path
-    void XzCompressor::compress(filesystem::path source) {
+    void XzDecompressor::decompress(filesystem::path source) {
 
+        /*
         // When LZMA_CONCATENATED flag was used when initializing the decoder,
         // we need to tell lzma_code() when there will be no more input.
         // This is done by setting action to LZMA_FINISH instead of LZMA_RUN
@@ -184,6 +183,7 @@ namespace arke {
                 throw std::runtime_error { "" };
             }
         }
+        */
     }
 
 } /* namespace arke */

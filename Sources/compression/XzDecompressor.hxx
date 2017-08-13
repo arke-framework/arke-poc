@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * XzCompressor.hxx
+ * XzDecompressor.hxx
  *
- *  Created on: 12 août 2017
+ *  Created on: 13 août 2017
  *      Author: dami
  */
 
-#ifndef SOURCES_COMPRESSION_XZCOMPRESSOR_HXX_
-#define SOURCES_COMPRESSION_XZCOMPRESSOR_HXX_
+#ifndef SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
+#define SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
 
 #include <memory>
 #include <boost/filesystem.hpp>
@@ -31,11 +31,11 @@ namespace filesystem = boost::filesystem;
 
 namespace arke {
 
-    class XzCompressor;
-    using XzCompressorPtr = std::shared_ptr<XzCompressor>;
+    class XzDecompressor;
+    using XzDecompressorPtr = std::shared_ptr<XzDecompressor>;
 
-    /// \brief Define XzCompressor
-    class XzCompressor {
+    /// \brief Define XzDecompressor
+    class XzDecompressor {
 
         private:
 
@@ -52,16 +52,16 @@ namespace arke {
 
             /// \brief Constructor
             /// \param destination Destination path
-            XzCompressor(filesystem::path destination);
+            XzDecompressor(filesystem::path destination);
 
             /// \brief Destructor
-            virtual ~XzCompressor();
+            virtual ~XzDecompressor();
 
-            /// \brief Compress a file to a path
+            /// \brief Decompress a file to a path
             /// \param source Source path
-            void compress(filesystem::path source);
+            void decompress(filesystem::path source);
     };
 
 } /* namespace arke */
 
-#endif /* SOURCES_COMPRESSION_XZCOMPRESSOR_HXX_ */
+#endif /* SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_ */

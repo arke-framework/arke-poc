@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * XzCompressor_test.cxx
+ * XzDecompressor_test.cxx
  *
- *  Created on: 12 août 2017
+ *  Created on: 13 août 2017
  *      Author: dami
  */
 
-#include <compression/XzCompressor.hxx>
+#include <compression/XzDecompressor.hxx>
 #include "../catch/catch.hpp"
 
 #include "PackageTools.hxx"
 
 namespace arke {
 
-    TEST_CASE( "Test XZ compressor", "[compression]" ) {
+    TEST_CASE( "Test XZ decompressor", "[compression]" ) {
 
         auto path = test::FileDirectoryGenerator::createFile("file1_not_compressed.txt", true);
 
         // Create compressor
-        XzCompressor compressor{"file1_not_compressed.txt.xz"};
+        XzDecompressor decompressor{"file1_not_compressed.txt.xz"};
 
         // Compress
-        compressor.compress(path);
+        decompressor.decompress(path);
     }
-
 } /* namespace arke */
