@@ -31,10 +31,10 @@ namespace arke {
         auto path = test::FileDirectoryGenerator::createFile("file1_not_compressed.txt", true);
 
         // Create compressor
-        XzCompressor compressor{"file1_not_compressed.txt.xz"};
+        XzCompressor compressor{path};
 
         // Compress
-        compressor.compress(path);
+        compressor.compress("file1_not_compressed.txt.xz");
     }
 
 } /* namespace arke */

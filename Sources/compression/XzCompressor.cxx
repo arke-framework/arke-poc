@@ -21,179 +21,107 @@
 
 #include "XzCompressor.hxx"
 
+#include <archive_entry.h>
 #include <exception>
 
 namespace arke {
 
     // Init compressor
-    XzCompressor::XzCompressor(filesystem::path destination) : strm_(LZMA_STREAM_INIT), outputStream_(destination) {
+    XzCompressor::XzCompressor(filesystem::path source) : source_(source) {
 
-        // FIXME Set preset
-        uint32_t preset = 6;
-
-        // Initialize the encoder using a preset. Set the integrity to check
-        // to CRC64, which is the default in the xz command line tool. If
-        // the .xz file needs to be decompressed with XZ Embedded, use
-        // LZMA_CHECK_CRC32 instead.
-        lzma_ret ret = lzma_easy_encoder(&strm_, preset, LZMA_CHECK_CRC64);
-        if (ret != LZMA_OK) {
-            throw std::runtime_error { "Unable to init LZMA decoder" };
-        }
-
-        // Init strm
-        strm_.next_in = NULL;
-        strm_.avail_in = 0;
-        strm_.next_out = outbuf_;
-        strm_.avail_out = sizeof(outbuf_);
     }
 
     // Destructor
     XzCompressor::~XzCompressor() {
-
-        // End
-        lzma_end(&strm_);
-
-        // Close
-        outputStream_.close();
     }
 
-    // Compress a file to a path
-    void XzCompressor::compress(filesystem::path source) {
-        filesystem::ifstream istream{source};
-        compress(istream);
-    }
+    void XzCompressor::addEntry(filesystem::path entry, struct archive * a) {
 
-    // Compress a file to a path
-    void XzCompressor::compress(std::istream & inputStream) {
-
-        // When LZMA_CONCATENATED flag was used when initializing the decoder,
-        // we need to tell lzma_code() when there will be no more input.
-        // This is done by setting action to LZMA_FINISH instead of LZMA_RUN
-        // in the same way as it is done when encoding.
-        //
-        // When LZMA_CONCATENATED isn't used, there is no need to use
-        // LZMA_FINISH to tell when all the input has been read, but it
-        // is still OK to use it if you want. When LZMA_CONCATENATED isn't
-        // used, the decoder will stop after the first .xz stream. In that
-        // case some unused data may be left in strm_.next_in.
-        lzma_action action = LZMA_RUN;
-
-        while (true) {
-
-            if (strm_.avail_in == 0 && !inputStream.eof()) {
-
-                // read stream in inbuff
-                auto buffSize = inputStream.readsome(reinterpret_cast<char*>(inbuf_), BUFSIZ);
-
-                // Set buffer in struct
-                strm_.next_in = inbuf_;
-                strm_.avail_in = buffSize;
-
-                // Once the end of the input file has been reached,
-                // we need to tell lzma_code() that no more input
-                // will be coming. As said before, this isn't required
-                // if the LZMA_CONATENATED flag isn't used when
-                // initializing the decoder.
-                if (buffSize || inputStream.eof()) {
-                    action = LZMA_FINISH;
-                }
-            }
-
-            // Set lzma action
-            lzma_ret ret = lzma_code(&strm_, action);
-
-            if (/*strm_.avail_out == 0 || */ret == LZMA_STREAM_END) {
-
-                // Xrite size
-                ssize_t write_size = sizeof(outbuf_) - strm_.avail_out;
-
-                // Write result
-                outputStream_.write(reinterpret_cast<char *>(outbuf_), write_size);
-
-                // Reset output buff
-                strm_.next_out = outbuf_;
-                strm_.avail_out = sizeof(outbuf_);
-            }
-
-            if (ret != LZMA_OK) {
-                // Once everything has been decoded successfully, the
-                // return value of lzma_code() will be LZMA_STREAM_END.
-                //
-                // It is important to check for LZMA_STREAM_END. Do not
-                // assume that getting ret != LZMA_OK would mean that
-                // everything has gone well or that when you aren't
-                // getting more output it must have successfully
-                // decoded everything.
-                if (ret == LZMA_STREAM_END) {
-                    return;
-                }
-
-                // It's not LZMA_OK nor LZMA_STREAM_END,
-                // so it must be an error code. See lzma/base.h
-                // (src/liblzma/api/lzma/base.h in the source package
-                // or e.g. /usr/include/lzma/base.h depending on the
-                // install prefix) for the list and documentation of
-                // possible values. Many values listen in lzma_ret
-                // enumeration aren't possible in this example, but
-                // can be made possible by enabling memory usage limit
-                // or adding flags to the decoder initialization.
-                const char *msg;
-                switch (ret) {
-                    case LZMA_MEM_ERROR:
-                        msg = "Memory allocation failed";
-                        break;
-
-                    case LZMA_FORMAT_ERROR:
-                        // .xz magic bytes weren't found.
-                        msg = "The input is not in the .xz format";
-                        break;
-
-                    case LZMA_OPTIONS_ERROR:
-                        // For example, the headers specify a filter
-                        // that isn't supported by this liblzma
-                        // version (or it hasn't been enabled when
-                        // building liblzma, but no-one sane does
-                        // that unless building liblzma for an
-                        // embedded system). Upgrading to a newer
-                        // liblzma might help.
-                        //
-                        // Note that it is unlikely that the file has
-                        // accidentally became corrupt if you get this
-                        // error. The integrity of the .xz headers is
-                        // always verified with a CRC32, so
-                        // unintentionally corrupt files can be
-                        // distinguished from unsupported files.
-                        msg = "Unsupported compression options";
-                        break;
-
-                    case LZMA_DATA_ERROR:
-                        msg = "Compressed file is corrupt";
-                        break;
-
-                    case LZMA_BUF_ERROR:
-                        // Typically this error means that a valid
-                        // file has got truncated, but it might also
-                        // be a damaged part in the file that makes
-                        // the decoder think the file is truncated.
-                        // If you prefer, you can use the same error
-                        // message for this as for LZMA_DATA_ERROR.
-                        msg = "Compressed file is truncated or "
-                                "otherwise corrupt";
-                        break;
-
-                    default:
-                        // This is most likely LZMA_PROG_ERROR.
-                        msg = "Unknown error, possibly a bug";
-                        break;
-                }
-
-                //fprintf(stderr, "%s: Decoder error: "
-                //        "%s (error code %u)\n",
-                //        inname, msg, ret);
-
-                throw std::runtime_error { "" };
-            }
+        // Test file exists
+        if (!filesystem::exists(entry)) {
+            throw std::runtime_error{std::string{"Entry does not exist "} + entry.c_str()};
         }
+
+        // Test directory
+        if (filesystem::is_directory(entry)) {
+            addDirectoryEntry(entry, a);
+        // Test is regular file
+        } else if (filesystem::is_regular(entry)) {
+            addFileEntry(entry, a);
+        } else {
+            throw std::runtime_error{std::string{"Unable to compress this file type"} + archive_error_string(a)};
+        }
+    }
+
+    // Add file entry
+    void XzCompressor::addFileEntry(filesystem::path entryPath, struct archive * a) {
+
+        struct stat st;
+
+        // Find file stat
+        stat(entryPath.c_str(), &st);
+
+        // Create entry
+        struct archive_entry *entry = archive_entry_new();
+
+        // Set entry headers
+        archive_entry_set_pathname(entry, entryPath.c_str());
+        archive_entry_set_size(entry, st.st_size);
+        archive_entry_set_filetype(entry, AE_IFREG);
+        archive_entry_set_perm(entry, 0644);
+        archive_write_header(a, entry);
+
+        // Create read buffer
+        char buff[8192];
+
+        // Open file
+        filesystem::fstream inputStream {entryPath};
+
+        while(!inputStream.eof()) {
+
+            // Read some data
+            auto size = inputStream.readsome(buff, 8192);
+            if (size == 0) {
+                break;
+            }
+
+            // Write data
+            archive_write_data(a, buff, size);
+        }
+
+        archive_entry_free(entry);
+    }
+
+    // Add directory entry
+    void XzCompressor::addDirectoryEntry(filesystem::path entry, struct archive * a) {
+
+        // Parse all files form folder and add entries
+        for (auto & x : filesystem::directory_iterator(entry)) {
+            addEntry(x, a);
+        }
+    }
+
+    // Compress a file to a path
+    void XzCompressor::compress(filesystem::path destination) {
+
+        // Create archive writer
+        struct archive *a = archive_write_new();
+
+        // Set archive type
+        archive_write_add_filter_xz(a);
+        archive_write_set_format_pax_restricted(a);
+
+        // Open archive
+        archive_write_open_filename(a, destination.c_str());
+
+        // Add root entry
+        addEntry(source_, a);
+
+        // Close archive
+        archive_write_close(a);
+
+        // Free archive memory
+        archive_write_free(a);
     }
 
 } /* namespace arke */

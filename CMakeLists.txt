@@ -21,11 +21,11 @@ message("-- Includes ${BOTAN_INCLUDE_DIRS}")
 message("-- Library ${BOTAN_LIBRARIES}")
 
 # Find xz / lzma
-find_path(LZMA_INCLUDE_DIRS NAMES lzma.h)
-find_library(LZMA_LIBRARIES NAMES lzma)
+find_path(LIBARCHIVE_INCLUDE_DIRS NAMES archive.h)
+find_library(LIBARCHIVE_LIBRARIES NAMES archive)
 
-message("-- Includes ${LZMA_INCLUDE_DIRS}")
-message("-- Library ${LZMA_LIBRARIES}")
+message("-- Includes ${LIBARCHIVE_INCLUDE_DIRS}")
+message("-- Library ${LIBARCHIVE_LIBRARIES}")
 
 message("-- Compiler familly ${CMAKE_CXX_COMPILER_ID}")
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -69,14 +69,14 @@ target_include_directories(
 	
 	PRIVATE
 		${BOTAN_INCLUDE_DIRS}
-		${LZMA_INCLUDE_DIRS}
+		${LIBARCHIVE_INCLUDE_DIRS}
 		${Boost_INCLUDE_DIRS}
 )
 target_link_libraries(
 	arke
 	${COVERAGE_LINK_FLAGS}
 	${BOTAN_LIBRARIES}
-	${LZMA_LIBRARIES}
+	${LIBARCHIVE_LIBRARIES}
 )
 target_include_directories(
 	arke

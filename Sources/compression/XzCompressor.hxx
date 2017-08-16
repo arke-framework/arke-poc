@@ -22,10 +22,9 @@
 #ifndef SOURCES_COMPRESSION_XZCOMPRESSOR_HXX_
 #define SOURCES_COMPRESSION_XZCOMPRESSOR_HXX_
 
+#include <archive.h>
 #include <memory>
 #include <boost/filesystem.hpp>
-
-#include <lzma.h>
 
 namespace filesystem = boost::filesystem;
 
@@ -39,34 +38,33 @@ namespace arke {
 
         private:
 
-            /// \brief LZMA stream
-            lzma_stream strm_;
+            /// /brief source
+            filesystem::path source_;
 
-            /// \brief Input buffer
-            uint8_t inbuf_[BUFSIZ];
+            /// \brief Add generic entry
+            /// \param entry Entry path
+            void addEntry(filesystem::path entry, struct archive * a);
 
-            /// \brief Output buffer
-            uint8_t outbuf_[BUFSIZ];
+            /// \brief Add file entry
+            /// \param entry Entry path
+            void addFileEntry(filesystem::path entry, struct archive * a);
 
-            /// \brief Output stream
-            filesystem::ofstream outputStream_;
+            /// \brief Add directory entry
+            /// \param entry Entry path
+            void addDirectoryEntry(filesystem::path entry, struct archive * a);
 
         public:
 
             /// \brief Constructor
-            /// \param destination Destination path
-            XzCompressor(filesystem::path destination);
+            /// \param source Source path
+            XzCompressor(filesystem::path source);
 
             /// \brief Destructor
             virtual ~XzCompressor();
 
-            /// \brief Compress a stream
-            /// \param stream Input stream
-            void compress(std::istream & stream);
-
-            /// \brief Compress a file to a path
-            /// \param source Source path
-            void compress(filesystem::path source);
+            /// \brief Compress a path to an XZ file
+            /// \param destination Destination path
+            void compress(filesystem::path destination);
     };
 
 } /* namespace arke */

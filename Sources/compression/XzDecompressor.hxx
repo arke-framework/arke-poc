@@ -25,8 +25,6 @@
 #include <memory>
 #include <boost/filesystem.hpp>
 
-#include <lzma.h>
-
 namespace filesystem = boost::filesystem;
 
 namespace arke {
@@ -39,27 +37,21 @@ namespace arke {
 
         private:
 
-            /// \brief LZMA stream
-            lzma_stream strm_;
-
-            /// \brief Input buffer
-            uint8_t inbuf_[BUFSIZ];
-
-            /// \brief Output buffer
-            uint8_t outbuf_[BUFSIZ];
+            // Source file path
+            filesystem::path source_;
 
         public:
 
             /// \brief Constructor
-            /// \param destination Destination path
-            XzDecompressor(filesystem::path destination);
+            /// \param source Source file path
+            XzDecompressor(filesystem::path source);
 
             /// \brief Destructor
             virtual ~XzDecompressor();
 
             /// \brief Decompress a file to a path
-            /// \param source Source path
-            void decompress(filesystem::path source);
+            /// \param destination Destinantion path
+            void decompress(filesystem::path destination);
     };
 
 } /* namespace arke */

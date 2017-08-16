@@ -28,12 +28,10 @@ namespace arke {
 
     TEST_CASE( "Test XZ decompressor", "[compression]" ) {
 
-        auto path = test::FileDirectoryGenerator::createFile("file1_not_compressed.txt", true);
-
         // Create compressor
-        //XzDecompressor decompressor{"file1_not_compressed.txt.xz"};
+        XzDecompressor decompressor{"file1_not_compressed.txt.xz"};
 
         // Compress
-        //decompressor.decompress(path);
+        decompressor.decompress("destination1");
     }
 } /* namespace arke */
