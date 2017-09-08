@@ -22,11 +22,8 @@
 #ifndef SOURCES_COMPRESSION_XZCOMPRESSOR_HXX_
 #define SOURCES_COMPRESSION_XZCOMPRESSOR_HXX_
 
-#include <archive.h>
 #include <memory>
-#include <boost/filesystem.hpp>
-
-namespace filesystem = boost::filesystem;
+#include "Compressor.hxx"
 
 namespace arke {
 
@@ -34,37 +31,17 @@ namespace arke {
     using XzCompressorPtr = std::shared_ptr<XzCompressor>;
 
     /// \brief Define XzCompressor
-    class XzCompressor {
+    class XzCompressor : public Compressor {
 
-        private:
+        protected:
 
-            /// /brief source
-            filesystem::path source_;
-
-            /// \brief Add generic entry
-            /// \param entry Entry path
-            void addEntry(filesystem::path entry, struct archive * a);
-
-            /// \brief Add file entry
-            /// \param entry Entry path
-            void addFileEntry(filesystem::path entry, struct archive * a);
-
-            /// \brief Add directory entry
-            /// \param entry Entry path
-            void addDirectoryEntry(filesystem::path entry, struct archive * a);
+            // Override algorithm
+            virtual void loadAlgorithm(struct archive *a) override;
 
         public:
 
-            /// \brief Constructor
-            /// \param source Source path
-            XzCompressor(filesystem::path source);
-
-            /// \brief Destructor
-            virtual ~XzCompressor();
-
-            /// \brief Compress a path to an XZ file
-            /// \param destination Destination path
-            void compress(filesystem::path destination);
+            // Use mother constructors
+            using Compressor::Compressor;
     };
 
 } /* namespace arke */

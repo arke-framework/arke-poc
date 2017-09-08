@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * XzDecompressor.hxx
+ * GzCompressor.hxx
  *
- *  Created on: 13 août 2017
+ *  Created on: 8 sept. 2017
  *      Author: dami
  */
 
-#ifndef SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
-#define SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
+#ifndef SOURCES_COMPRESSION_GZCOMPRESSOR_HXX_
+#define SOURCES_COMPRESSION_GZCOMPRESSOR_HXX_
 
 #include <memory>
-#include "Decompressor.hxx"
+#include "Compressor.hxx"
 
 namespace arke {
 
-    class XzDecompressor;
-    using XzDecompressorPtr = std::shared_ptr<XzDecompressor>;
+    class GzCompressor;
+    using GzCompressorPtr = std::shared_ptr<GzCompressor>;
 
-    /// \brief Define XzDecompressor
-    class XzDecompressor : public Decompressor {
+    /// \brief Define GzCompressor
+    class GzCompressor : public Compressor {
 
         protected:
 
@@ -41,9 +41,9 @@ namespace arke {
         public:
 
             // Use mother constructors
-            using Decompressor::Decompressor;
+            using Compressor::Compressor;
     };
 
 } /* namespace arke */
 
-#endif /* SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_ */
+#endif /* SOURCES_COMPRESSION_GZCOMPRESSOR_HXX_ */

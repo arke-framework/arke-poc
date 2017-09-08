@@ -13,37 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * XzDecompressor.hxx
+ * GzCompressor_test.cxx
  *
- *  Created on: 13 août 2017
+ *  Created on: 8 sept. 2017
  *      Author: dami
  */
 
-#ifndef SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
-#define SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
+#include <compression/GzCompressor.hxx>
+#include "../catch/catch.hpp"
 
-#include <memory>
-#include "Decompressor.hxx"
+#include "PackageTools.hxx"
 
 namespace arke {
 
-    class XzDecompressor;
-    using XzDecompressorPtr = std::shared_ptr<XzDecompressor>;
+    TEST_CASE( "Test GZ compressor", "[compression]" ) {
 
-    /// \brief Define XzDecompressor
-    class XzDecompressor : public Decompressor {
+        auto path = test::FileDirectoryGenerator::createFile("file1_not_compressed.txt", true);
 
-        protected:
+        // Create compressor
+        GzCompressor compressor{path};
 
-            // Override algorithm
-            virtual void loadAlgorithm(struct archive *a) override;
-
-        public:
-
-            // Use mother constructors
-            using Decompressor::Decompressor;
-    };
-
+        // Compress
+        compressor.compress("file1_not_compressed.txt.gz");
+    }
 } /* namespace arke */
-
-#endif /* SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_ */

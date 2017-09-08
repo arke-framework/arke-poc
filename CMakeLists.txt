@@ -61,8 +61,12 @@ add_library(
     
     Sources/version/VersionMatcher.cxx Sources/version/VersionMatcher.hxx
     
+    Sources/compression/Compressor.cxx Sources/compression/Compressor.hxx
+    Sources/compression/Decompressor.cxx Sources/compression/Decompressor.hxx
     Sources/compression/XzCompressor.cxx Sources/compression/XzCompressor.hxx
     Sources/compression/XzDecompressor.cxx Sources/compression/XzDecompressor.hxx
+    Sources/compression/GzCompressor.cxx Sources/compression/GzCompressor.hxx
+    Sources/compression/GzDecompressor.cxx Sources/compression/GzDecompressor.hxx
 )
 target_include_directories(
 	arke
@@ -97,6 +101,8 @@ add_executable(
 	Tests/arke/FilesGroup_test.cxx
 	Tests/arke/tools/SHAGenerator_test.cxx
 	Tests/arke/PackageTools.hxx
+	Tests/arke/GzCompressor_test.cxx
+	Tests/arke/GzDecompressor_test.cxx
 	Tests/arke/XzCompressor_test.cxx
 	Tests/arke/XzDecompressor_test.cxx
 )

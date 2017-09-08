@@ -13,37 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * XzDecompressor.hxx
+ * GzDecompressor.cxx
  *
- *  Created on: 13 août 2017
+ *  Created on: 8 sept. 2017
  *      Author: dami
  */
 
-#ifndef SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
-#define SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_
-
-#include <memory>
-#include "Decompressor.hxx"
+#include "GzDecompressor.hxx"
 
 namespace arke {
 
-    class XzDecompressor;
-    using XzDecompressorPtr = std::shared_ptr<XzDecompressor>;
-
-    /// \brief Define XzDecompressor
-    class XzDecompressor : public Decompressor {
-
-        protected:
-
-            // Override algorithm
-            virtual void loadAlgorithm(struct archive *a) override;
-
-        public:
-
-            // Use mother constructors
-            using Decompressor::Decompressor;
-    };
+    void GzDecompressor::loadAlgorithm(struct archive *a) {
+        archive_read_support_compression_gzip(a);
+        archive_read_support_format_gnutar(a);
+    }
 
 } /* namespace arke */
-
-#endif /* SOURCES_COMPRESSION_XZDECOMPRESSOR_HXX_ */
