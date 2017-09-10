@@ -51,6 +51,8 @@ add_library(
     Sources/dependency/Dependency.cxx Sources/dependency/Dependency.hxx
     Sources/dependency/DependencyDefinition.cxx Sources/dependency/DependencyDefinition.hxx
     Sources/dependency/DependencyBuilder.cxx Sources/dependency/DependencyBuilder.hxx
+    Sources/dependency/DependencyEncoder.cxx Sources/dependency/DependencyEncoder.hxx
+    Sources/dependency/DependencyDecoder.cxx Sources/dependency/DependencyDecoder.hxx
     
     Sources/files/HashFile.cxx Sources/files/HashFile.hxx
     Sources/files/FilesGroup.cxx Sources/files/FilesGroup.hxx
@@ -58,6 +60,8 @@ add_library(
     
     Sources/package/Package.cxx Sources/package/Package.hxx
     Sources/package/PackageBuilder.cxx Sources/package/PackageBuilder.hxx
+    Sources/package/PackageEncoder.cxx Sources/package/PackageEncoder.hxx
+    Sources/package/PackageDecoder.cxx Sources/package/PackageDecoder.hxx
     
     Sources/version/VersionMatcher.cxx Sources/version/VersionMatcher.hxx
     
@@ -72,6 +76,7 @@ target_include_directories(
 	arke
 	
 	PRIVATE
+		libraries
 		${BOTAN_INCLUDE_DIRS}
 		${LIBARCHIVE_INCLUDE_DIRS}
 		${Boost_INCLUDE_DIRS}
@@ -105,6 +110,8 @@ add_executable(
 	Tests/arke/GzDecompressor_test.cxx
 	Tests/arke/XzCompressor_test.cxx
 	Tests/arke/XzDecompressor_test.cxx
+	Tests/arke/DependencyCoder_test.cxx
+	Tests/arke/PackageCoder_test.cxx
 )
 target_include_directories(
 	arke_test

@@ -49,8 +49,8 @@ namespace arke {
 
             /// \brief Constructor
             /// \param dependency Dependency
-            /// \param groups Set of files groups
-            explicit Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups_);
+            /// \param fileGroups Set of files groups
+            explicit Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups);
 
         public:
 
