@@ -23,15 +23,38 @@
 #define SOURCES_JSON_JSONENCODER_HXX_
 
 #include <memory>
+#include <ostream>
+#include "json.hpp"
 
 namespace arke {
 
-    class JSONEncoder;
-    using JSONEncoderPtr = std::shared_ptr<JSONEncoder>;
+    using json = nlohmann::json;
 
-/// \brief Define JSONEncoder
-/// \brief arke::JSONEncoder
+    /// \brief Define JSONEncoder
+    template<class Element>
     class JSONEncoder {
+
+        public:
+
+            /// \brief Destructor
+            virtual ~JSONEncoder() {}
+
+            /*
+            /// \brief Encode an element to stream
+            /// \param element Element to encode
+            /// \param ostream Output stream
+            virtual void encode(std::shared_ptr<Element> element, std::ostream & ostream) {
+
+                //if (element) {
+                //    ostream << *element;
+                //}
+            }
+
+            /// \brief Encode an element to stream
+            /// \param element Element to encode
+            /// \return JSON object
+            virtual json encode(std::shared_ptr<Element> element) = 0;
+            */
     };
 
 } /* namespace arke */

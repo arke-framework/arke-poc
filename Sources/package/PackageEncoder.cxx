@@ -23,7 +23,14 @@
 
 namespace arke {
 
-    void PackageEncoder::encode(PackagePtr package, std::ostream & ostream) {
+
+    // Encode an element to stream
+    void PackageEncoder::encode(PackagePtr element, std::ostream & ostream) {
+
+    }
+
+    // Encode package to stream
+    json PackageEncoder::encode(PackagePtr package) {
 
     }
 

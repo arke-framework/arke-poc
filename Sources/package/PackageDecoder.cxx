@@ -20,14 +20,12 @@
  */
 
 #include "PackageDecoder.hxx"
-#include "json.hpp"
 #include "PackageBuilder.hxx"
 
 namespace arke {
 
+    // Decode an element from json stream
     PackagePtr PackageDecoder::decode(std::istream & istream) {
-
-        using json = nlohmann::json;
 
         // Read JSON
         json jsonObject;
@@ -35,8 +33,14 @@ namespace arke {
         // Read from istream
         std::cin >> jsonObject;
 
+        return decode(jsonObject);
+    }
+
+    // Decode an element from json object
+    PackagePtr PackageDecoder::decode(json & json) {
+
         // Test valid object
-        if(!jsonObject.is_object()) {
+        if(!json.is_object()) {
             // FIXME Logs
             return PackagePtr{};
         }

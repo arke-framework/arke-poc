@@ -19,7 +19,7 @@
  *      Author: dami
  */
 
-#include "/home/dami/eclipse-workspace/arke/Sources/dependency/DependencyDecoder.hxx"
+#include <dependency/DependencyDecoder.hxx>
 
 namespace arke {
 

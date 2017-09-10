@@ -24,6 +24,7 @@
 
 #include <memory>
 #include <ostream>
+#include "json/JSONEncoder.hxx"
 #include "Package.hxx"
 
 namespace arke {
@@ -32,10 +33,19 @@ namespace arke {
     using PackageEncoderPtr = std::shared_ptr<PackageEncoder>;
 
     /// \brief Define PackageEncoder
-    class PackageEncoder {
+    class PackageEncoder : public JSONEncoder<Package> {
 
         public:
-            void encode(PackagePtr package, std::ostream & ostream);
+
+            /// \brief Encode an element to stream
+            /// \param element Element to encode
+            /// \param ostream Output stream
+            void encode(PackagePtr element, std::ostream & ostream);
+
+            /// \brief Encode package to stream
+            /// \param package Pointer containing package
+            /// \return Json object
+            json encode(PackagePtr package);
     };
 
 } /* namespace arke */

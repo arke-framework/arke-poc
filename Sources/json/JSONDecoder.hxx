@@ -23,15 +23,23 @@
 #define SOURCES_JSON_JSONDECODER_HXX_
 
 #include <memory>
+#include <istream>
+#include "json.hpp"
 
 namespace arke {
 
-    class JSONDecoder;
-    using JSONDecoderPtr = std::shared_ptr<JSONDecoder>;
+    using json = nlohmann::json;
 
-/// \brief Define JSONDecoder
-/// \brief arke::JSONDecoder
+    /// \brief Define JSONDecoder
+    template<class Element>
     class JSONDecoder {
+
+        public:
+
+            // Virtual destructor
+            virtual ~JSONDecoder() {}
+
+        public:
     };
 
 } /* namespace arke */

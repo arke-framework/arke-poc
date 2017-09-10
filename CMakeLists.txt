@@ -58,6 +58,9 @@ add_library(
     Sources/files/FilesGroup.cxx Sources/files/FilesGroup.hxx
     Sources/files/FilesGroupBuilder.cxx Sources/files/FilesGroupBuilder.hxx
     
+	Sources/json/JSONEncoder.hxx 
+	Sources/json/JSONDecoder.hxx
+    
     Sources/package/Package.cxx Sources/package/Package.hxx
     Sources/package/PackageBuilder.cxx Sources/package/PackageBuilder.hxx
     Sources/package/PackageEncoder.cxx Sources/package/PackageEncoder.hxx
@@ -117,6 +120,7 @@ target_include_directories(
 	arke_test
 	
 	PRIVATE
+		libraries
 		Sources
 )
 target_link_libraries(

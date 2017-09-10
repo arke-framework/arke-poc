@@ -25,6 +25,7 @@
 #include <memory>
 #include <istream>
 #include "Package.hxx"
+#include "json/JSONDecoder.hxx"
 
 namespace arke {
 
@@ -32,9 +33,17 @@ namespace arke {
     using PackageDecoderPtr = std::shared_ptr<PackageDecoder>;
 
     /// \brief Define PackageDecoder
-    class PackageDecoder {
+    class PackageDecoder : public JSONDecoder<PackagePtr> {
         public:
+
+            /// \brief Decode an element from json stream
+            /// \param istream Input stream containing object
             PackagePtr decode(std::istream & istream);
+
+            /// \brief Decode an element from json object
+            /// \param json JSON object
+            PackagePtr decode(json & json);
+
     };
 
 } /* namespace arke */
