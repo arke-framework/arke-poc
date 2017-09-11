@@ -31,30 +31,12 @@ namespace arke {
     using json = nlohmann::json;
 
     /// \brief Define JSONEncoder
-    template<class Element>
-    class JSONEncoder {
+    struct JSONEncoder {
 
-        public:
-
-            /// \brief Destructor
-            virtual ~JSONEncoder() {}
-
-            /*
-            /// \brief Encode an element to stream
-            /// \param element Element to encode
-            /// \param ostream Output stream
-            virtual void encode(std::shared_ptr<Element> element, std::ostream & ostream) {
-
-                //if (element) {
-                //    ostream << *element;
-                //}
+            template<class Encoder, class Type>
+            static void encode(std::shared_ptr<Type> object, std::ostream & stream) {
+                stream << Encoder{}.encode(object);
             }
-
-            /// \brief Encode an element to stream
-            /// \param element Element to encode
-            /// \return JSON object
-            virtual json encode(std::shared_ptr<Element> element) = 0;
-            */
     };
 
 } /* namespace arke */

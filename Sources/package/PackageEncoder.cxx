@@ -21,17 +21,14 @@
 
 #include "PackageEncoder.hxx"
 
+#include "dependency/DependencyEncoder.hxx"
+
 namespace arke {
-
-
-    // Encode an element to stream
-    void PackageEncoder::encode(PackagePtr element, std::ostream & ostream) {
-
-    }
 
     // Encode package to stream
     json PackageEncoder::encode(PackagePtr package) {
-
+        json object = DependencyEncoder{}.encode(package->dependency());
+        return object;
     }
 
 } /* namespace arke */

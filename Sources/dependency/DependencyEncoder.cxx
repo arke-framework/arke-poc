@@ -23,4 +23,9 @@
 
 namespace arke {
 
+    json DependencyEncoder::encode(DependencyPtr dependency) {
+        json object;
+        return object;
+    }
+
 } /* namespace arke */

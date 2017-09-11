@@ -23,4 +23,8 @@
 
 namespace arke {
 
+    DependencyPtr DependencyDecoder::decode(json & object) {
+        DependencyPtr{};
+    }
+
 } /* namespace arke */

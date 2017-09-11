@@ -26,12 +26,17 @@
 #include <package/PackageBuilder.hxx>
 #include <sstream>
 
+// FIXME iostream
+#include <iostream>
+
 namespace arke {
 
     TEST_CASE( "Package encode/decode", "[package], [json]" ) {
 
         // Create dependecy
         auto dependency = DependencyBuilder{}
+            .organizationName("org")
+            .name("name")
             .build();
 
         // Create package
@@ -43,10 +48,12 @@ namespace arke {
         std::stringstream ss;
 
         // Encode package
-        PackageEncoder{}.encode(package, ss);
+        JSONEncoder::encode<PackageEncoder, Package>(package, ss);
 
         // Decode package
-        auto readedPackage = PackageDecoder{}.decode(ss);
+        auto readedPackage = JSONDecoder::decode<PackageDecoder, Package>(ss);
+
+        std::cout << "JSON : " << ss.str();
 
         // Test same
         //REQUIRE(readedPackage);

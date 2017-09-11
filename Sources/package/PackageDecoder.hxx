@@ -33,7 +33,8 @@ namespace arke {
     using PackageDecoderPtr = std::shared_ptr<PackageDecoder>;
 
     /// \brief Define PackageDecoder
-    class PackageDecoder : public JSONDecoder<PackagePtr> {
+    class PackageDecoder {
+
         public:
 
             /// \brief Decode an element from json stream

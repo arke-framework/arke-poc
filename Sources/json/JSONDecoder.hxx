@@ -31,15 +31,14 @@ namespace arke {
     using json = nlohmann::json;
 
     /// \brief Define JSONDecoder
-    template<class Element>
-    class JSONDecoder {
+    struct JSONDecoder {
 
-        public:
-
-            // Virtual destructor
-            virtual ~JSONDecoder() {}
-
-        public:
+            template<class Decoder, class Type>
+            static std::shared_ptr<Type> decode(std::istream & stream) {
+                json object;
+                stream >> object;
+                return Decoder{}.decode(object);
+            }
     };
 
 } /* namespace arke */

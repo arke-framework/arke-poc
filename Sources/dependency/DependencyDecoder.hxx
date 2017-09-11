@@ -23,6 +23,9 @@
 #define SOURCES_DEPENDENCY_DEPENDENCYDECODER_HXX_
 
 #include <memory>
+#include <ostream>
+#include "json/JSONEncoder.hxx"
+#include "dependency/Dependency.hxx"
 
 namespace arke {
 
@@ -30,7 +33,8 @@ namespace arke {
     using DependencyDecoderPtr = std::shared_ptr<DependencyDecoder>;
 
     /// \brief Define DependencyDecoder
-    class DependencyDecoder {
+    struct DependencyDecoder {
+        DependencyPtr decode(json & object);
     };
 
 } /* namespace arke */
