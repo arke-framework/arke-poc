@@ -57,6 +57,8 @@ add_library(
     Sources/files/HashFile.cxx Sources/files/HashFile.hxx
     Sources/files/FilesGroup.cxx Sources/files/FilesGroup.hxx
     Sources/files/FilesGroupBuilder.cxx Sources/files/FilesGroupBuilder.hxx
+    Sources/files/FilesGroupEncoder.cxx Sources/files/FilesGroupEncoder.hxx
+    Sources/files/FilesGroupDecoder.cxx Sources/files/FilesGroupDecoder.hxx
     
 	Sources/json/JSONEncoder.hxx 
 	Sources/json/JSONDecoder.hxx

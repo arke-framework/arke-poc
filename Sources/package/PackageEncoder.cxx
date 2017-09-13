@@ -21,13 +21,38 @@
 
 #include "PackageEncoder.hxx"
 
+#include "../files/FilesGroupEncoder.hxx"
 #include "dependency/DependencyEncoder.hxx"
 
 namespace arke {
 
     // Encode package to stream
     json PackageEncoder::encode(PackagePtr package) {
+
+        // Create root object from package dependency
         json object = DependencyEncoder{}.encode(package->dependency());
+
+        if (package) {
+
+            // Test if file group exists
+            auto fileGroups = package->fileGroups();
+            if (!fileGroups.empty()) {
+
+                json array;
+
+                // Set file groups
+                object["groups"] = array;
+
+                // Encode all file groups
+                for (auto fileGroup : fileGroups) {
+
+                    // File group encoder
+                    FilesGroupEncoder{}.encode(fileGroup);
+                }
+            }
+
+        }
+
         return object;
     }
 

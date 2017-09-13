@@ -33,7 +33,11 @@ namespace arke {
 
         PackageBuilder & packageBuilder = *new PackageBuilder { };
 
-        PackagePtr package = packageBuilder.dependency(DependencyBuilder { }.organizationName("org").name("package").build()).build();
+        PackagePtr package = packageBuilder.dependency(DependencyBuilder { }
+                .organization("org")
+                .name("package")
+                .build()
+        ).build();
 
         REQUIRE(package);
 
@@ -58,7 +62,12 @@ namespace arke {
                         .append(HashFile::from(file1))
                         .build();
 
-        PackagePtr package = PackageBuilder { }.dependency(DependencyBuilder { }.organizationName("org").name("package").build())
+        PackagePtr package = PackageBuilder { }.dependency(
+                DependencyBuilder { }
+                    .organization("org")
+                    .name("package")
+                    .build()
+                )
                 .addFilesGroup(filesGroup)
                 .build();
 

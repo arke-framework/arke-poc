@@ -37,8 +37,8 @@ namespace arke {
         return *this;
     }
 
-    DependencyBuilder& DependencyBuilder::organizationName(const std::string& name) {
-        this->organizationName_ = name;
+    DependencyBuilder& DependencyBuilder::organization(const std::string& organization) {
+        this->organizationName_ = organization;
         return *this;
     }
 

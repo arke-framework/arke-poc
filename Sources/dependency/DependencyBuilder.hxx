@@ -55,7 +55,7 @@ namespace arke {
             /// \brief Set organization name
             /// \param name Dependency name
             /// \return CUrrent builder
-            DependencyBuilder & organizationName(const std::string & name);
+            DependencyBuilder & organization(const std::string & name);
 
             /// \brief Build valid dependency
             /// \return Dependency builder neve invalid

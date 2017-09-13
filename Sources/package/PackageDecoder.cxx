@@ -21,6 +21,7 @@
 
 #include "PackageDecoder.hxx"
 #include "PackageBuilder.hxx"
+#include "dependency/DependencyDecoder.hxx"
 
 namespace arke {
 
@@ -47,6 +48,14 @@ namespace arke {
 
         // Create object
         PackageBuilder packageBuilder{};
+
+        // Decode a dependency
+        auto dependency = DependencyDecoder{}.decode(json);
+        if (dependency) {
+
+            // Add dependency
+            packageBuilder.dependency(dependency);
+        }
 
         return packageBuilder.build();
     }

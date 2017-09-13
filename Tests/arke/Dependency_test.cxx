@@ -33,7 +33,7 @@ namespace arke {
         dependencyBuilder.name("package1");
         REQUIRE_THROWS(dependencyBuilder.build());
 
-        dependencyBuilder.organizationName("org");
+        dependencyBuilder.organization("org");
 
         DependencyPtr dependency = dependencyBuilder.build();
 

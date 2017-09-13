@@ -24,7 +24,19 @@
 namespace arke {
 
     json DependencyEncoder::encode(DependencyPtr dependency) {
+
+        // Init json object
         json object;
+
+        if (dependency) {
+
+            // Set organization
+            object["organization"] = dependency->organization();
+
+            // Set name
+            object["name"] = dependency->name();
+        }
+
         return object;
     }
 

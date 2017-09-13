@@ -13,34 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * DependencyDecoder.cxx
+ * FileGroupDecoder.hxx
  *
- *  Created on: 10 sept. 2017
+ *  Created on: 13 sept. 2017
  *      Author: dami
  */
 
-#include "DependencyDecoder.hxx"
+#ifndef SOURCES_FILES_FILESGROUPDECODER_HXX_
+#define SOURCES_FILES_FILESGROUPDECODER_HXX_
 
-#include "dependency/DependencyBuilder.hxx"
+#include <memory>
 
 namespace arke {
 
-    // Decode json
-    DependencyPtr DependencyDecoder::decode(json & object) {
+    class FilesGroupDecoder;
+    using FileGroupDecoderPtr = std::shared_ptr<FilesGroupDecoder>;
 
-        // Create dependency builder
-        DependencyBuilder dependencyBuilder{};
-
-        if (object.is_object()) {
-
-            // Set name
-            dependencyBuilder.name(object["name"]);
-
-            // Set organization
-            dependencyBuilder.organization(object["organization"]);
-        }
-
-        return dependencyBuilder.build();
-    }
+    /// \brief Define FileGroupDecoder
+    class FilesGroupDecoder {
+        public:
+    };
 
 } /* namespace arke */
+
+#endif /* SOURCES_FILES_FILESGROUPDECODER_HXX_ */
