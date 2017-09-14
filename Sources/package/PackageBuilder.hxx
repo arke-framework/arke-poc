@@ -35,6 +35,9 @@ namespace arke {
             /// \brief Dependency
             DependencyPtr dependency_;
 
+            /// \brief String containing version
+            std::string version_;
+
             /// \brief Files groups
             std::set<FilesGroupPtr> filesGroups_;
 
@@ -52,6 +55,11 @@ namespace arke {
             /// \param dependency Dependency
             /// \return this builder
             PackageBuilder & dependency(DependencyPtr dependency);
+
+            /// \brief Set dependency
+            /// \param dependency Dependency
+            /// \return this builder
+            PackageBuilder & version(const std::string & version);
 
             /// \brief Add files group to the package
             /// \param filesGroup New files group to add

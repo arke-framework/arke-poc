@@ -49,6 +49,12 @@ namespace arke {
         // Create object
         PackageBuilder packageBuilder{};
 
+        // Set version
+        if (auto version = json.at("version") ; version.is_string()) {
+            // Set version
+            packageBuilder.version(version);
+        }
+
         // Decode a dependency
         auto dependency = DependencyDecoder{}.decode(json);
         if (dependency) {

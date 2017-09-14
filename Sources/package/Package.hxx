@@ -44,13 +44,19 @@ namespace arke {
             /// \brief Dependency
             std::shared_ptr<Dependency> dependency_;
 
+            /// \brief Package version
+            std::string version_;
+
             /// \brief Files groups
             std::set<FilesGroupPtr> fileGroups_;
 
             /// \brief Constructor
             /// \param dependency Dependency
+            /// \param version Package version
             /// \param fileGroups Set of files groups
-            explicit Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups);
+            explicit Package(std::shared_ptr<Dependency> dependency,
+                    const std::string & version,
+                    std::set<FilesGroupPtr> fileGroups);
 
         public:
 
@@ -58,6 +64,9 @@ namespace arke {
             virtual ~Package();
 
         public:
+
+            /// \return String containing package version
+            std::string version() const;
 
             /// \return Dependency
             std::shared_ptr<Dependency> dependency() const;

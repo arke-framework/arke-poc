@@ -39,6 +39,12 @@ namespace arke {
         return *this;
     }
 
+    // Set version
+    PackageBuilder & PackageBuilder::version(const std::string & version) {
+        this->version_ = version;
+        return *this;
+    }
+
     // Add files group to the package
     PackageBuilder & PackageBuilder::addFilesGroup(FilesGroupPtr filesGroup) {
         if (filesGroup) {
@@ -56,8 +62,12 @@ namespace arke {
             throw std::runtime_error{"No dependency set"};
         }
 
+        if (version_.empty()) {
+            throw std::runtime_error{"No version set"};
+        }
+
         return std::shared_ptr<Package>{
-            new Package{dependency_, filesGroups_}
+            new Package{dependency_, version_, filesGroups_}
         };
     }
 

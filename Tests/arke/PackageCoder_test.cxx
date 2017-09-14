@@ -42,6 +42,7 @@ namespace arke {
         // Create package
         auto package = PackageBuilder{}
             .dependency(dependency)
+            .version("1.2.3")
             .build();
 
         // Create JSon stream
@@ -55,7 +56,9 @@ namespace arke {
 
         // Test same
         REQUIRE(readedPackage);
-        REQUIRE(readedPackage->dependency()->name() == "name");
-        REQUIRE(readedPackage->dependency()->organization() == "org");
+        REQUIRE("name" == readedPackage->dependency()->name());
+        REQUIRE("org" == readedPackage->dependency()->organization());
+
+        REQUIRE("1.2.3" == readedPackage->version());
     }
 } /* namespace arke */

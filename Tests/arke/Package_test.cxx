@@ -37,13 +37,17 @@ namespace arke {
                 .organization("org")
                 .name("package")
                 .build()
-        ).build();
+        )
+        .version("1.2.3")
+        .build();
 
         REQUIRE(package);
 
         REQUIRE("org" == package->dependency()->organization());
         REQUIRE("package" == package->dependency()->name());
         REQUIRE("org/package" == package->dependency()->id());
+
+        REQUIRE("1.2.3" == package->version());
 
         REQUIRE(0 == package->fileGroups().size());
 
@@ -68,6 +72,7 @@ namespace arke {
                     .name("package")
                     .build()
                 )
+                .version("1.2.3")
                 .addFilesGroup(filesGroup)
                 .build();
 
@@ -76,6 +81,8 @@ namespace arke {
         REQUIRE("org" == package->dependency()->organization());
         REQUIRE("package" == package->dependency()->name());
         REQUIRE("org/package" == package->dependency()->id());
+
+        REQUIRE("1.2.3" == package->version());
 
         REQUIRE(1 == package->fileGroups().size());
         FilesGroupPtr filesGroup_(*(package->fileGroups().begin()));

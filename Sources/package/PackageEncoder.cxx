@@ -34,6 +34,9 @@ namespace arke {
 
         if (package) {
 
+            // Set version
+            object["version"] = package->version();
+
             // Test if file group exists
             auto fileGroups = package->fileGroups();
             if (!fileGroups.empty()) {

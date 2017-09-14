@@ -24,7 +24,12 @@
 namespace arke {
 
     // Constructor
-    Package::Package(std::shared_ptr<Dependency> dependency, std::set<FilesGroupPtr> fileGroups) : dependency_(dependency), fileGroups_(fileGroups) {
+    Package::Package(std::shared_ptr<Dependency> dependency,
+            const std::string & version,
+            std::set<FilesGroupPtr> fileGroups) :
+                    dependency_(dependency),
+                    version_(version),
+                    fileGroups_(fileGroups) {
 
     }
 
@@ -36,6 +41,10 @@ namespace arke {
     // Dependency
     std::shared_ptr<Dependency> Package::dependency() const {
         return dependency_;
+    }
+
+    std::string Package::version() const {
+        return version_;
     }
 
     // Files groups
