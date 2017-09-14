@@ -48,6 +48,9 @@ add_library(
     
     Sources/crypto/SHAGenerator.cxx Sources/crypto/SHAGenerator.hxx
     
+	Sources/json/JSONEncoder.hxx 
+	Sources/json/JSONDecoder.hxx
+    
     Sources/dependency/Dependency.cxx Sources/dependency/Dependency.hxx
     Sources/dependency/DependencyDefinition.cxx Sources/dependency/DependencyDefinition.hxx
     Sources/dependency/DependencyBuilder.cxx Sources/dependency/DependencyBuilder.hxx
@@ -60,8 +63,10 @@ add_library(
     Sources/files/FilesGroupEncoder.cxx Sources/files/FilesGroupEncoder.hxx
     Sources/files/FilesGroupDecoder.cxx Sources/files/FilesGroupDecoder.hxx
     
-	Sources/json/JSONEncoder.hxx 
-	Sources/json/JSONDecoder.hxx
+    Sources/target/Target.cxx Sources/target/Target.hxx
+    Sources/target/TargetBuilder.cxx Sources/target/TargetBuilder.hxx
+    Sources/target/TargetEncoder.cxx Sources/target/TargetEncoder.hxx
+    Sources/target/TargetDecoder.cxx Sources/target/TargetDecoder.hxx
     
     Sources/package/Package.cxx Sources/package/Package.hxx
     Sources/package/PackageBuilder.cxx Sources/package/PackageBuilder.hxx
@@ -104,6 +109,7 @@ add_executable(
 	arke_test
 	Tests/main.cxx
 	Tests/arke/Dependency_test.cxx
+	Tests/arke/Target_test.cxx
 	Tests/arke/Package_test.cxx
 	Tests/arke/DependencyDefinition_test.cxx
 	Tests/arke/VersionMatcher_test.cxx
